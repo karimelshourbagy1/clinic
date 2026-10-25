@@ -3,8 +3,8 @@ window.CLINIC_CFG = {
   // من Firebase: Project settings → Your apps → Web app → firebaseConfig
   firebase: {
     apiKey: "",
-    authDomain: "",
-    projectId: "",
+    authDomain: "dr-karim-elshourbagy.firebaseapp.com",
+    projectId: "dr-karim-elshourbagy",
     storageBucket: "",
     messagingSenderId: "",
     appId: ""

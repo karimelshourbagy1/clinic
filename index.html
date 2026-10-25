@@ -3463,13 +3463,19 @@ function fcast(r){var per=(+r.u30||0)/30;if(!(per>0)||!(r.q>0))return "";var d=M
 /* ================= WEBSITE BOOKINGS (Google Sheet) ================= */
 var shBusy=false;
 function shCfg(){return{u:String(lget("sheetUrl","")||"").trim(),k:String(lget("sheetKey","")||"")};}
-function shShow(){var c=shCfg();$("bk-sheet").hidden=!(c.u&&c.k);if($("gs-url")&&document.activeElement!==$("gs-url"))$("gs-url").value=c.u;if($("gs-key")&&document.activeElement!==$("gs-key"))$("gs-key").value=c.k;}
+function shShow(){var c=shCfg();$("bk-sheet").hidden=!(c.u&&c.k)&&!window.KRT;if($("gs-url")&&document.activeElement!==$("gs-url"))$("gs-url").value=c.u;if($("gs-key")&&document.activeElement!==$("gs-key"))$("gs-key").value=c.k;}
 function sheetBooking(r){var o=parseMsg(r.msg||""),ph=(o.phone||String(r.phone||"")).replace(/\D/g,""),p=ph?patByPhone(ph):null;
   var a={id:uid("ap"),name:o.name||String(r.name||"").trim()||"بدون اسم",phone:ph,pid:p?p.id:"",age:o.age||"",sex:o.sex||"",svc:o.svc||String(r.service||""),co:o.co||"",
     pref:o.pref!=null&&o.pref!==""?o.pref:(o.d?"":[r.day,r.time].filter(Boolean).join(" ")),clinicId:o.clinicId||"",d:o.d||"",t:o.t||"",st:"req",src:o.src||"web",
     cAt:Date.parse(r.at)||Date.now(),bk:1,sheetId:String(r.id)};
   if(o.lang)a.lang=o.lang;a.note=a.svc||a.co||"";return a;}
-function pullSheet(manual){var c=shCfg();if(!c.u||!c.k||shBusy)return;shBusy=true;
+var fbBusy=false;
+function pullFb(manual){if(!window.KRT||!KRT.bookings||fbBusy)return;fbBusy=true;
+  KRT.bookings().then(function(rows){var n=0,seen={};APP.forEach(function(x){if(x.sheetId)seen[x.sheetId]=1;});
+    rows.forEach(function(r){var sid="fb:"+r.id;if(!seen[sid]){var a=sheetBooking(r);a.sheetId=sid;saveRec("appts",a);seen[sid]=1;n++;}KRT.doneBooking(r.id);});
+    if(n)toast(n+" حجز جديد من الموقع — في «طلبات جديدة»");else if(manual)toast("مفيش حجوزات جديدة");},
+    function(){if(manual)toast("مقدرش يسحب حجوزات الموقع دلوقتي",true);}).then(function(){fbBusy=false;});}
+function pullSheet(manual){pullFb(manual);var c=shCfg();if(!c.u||!c.k||shBusy)return;shBusy=true;
   var st=function(t){if($("gs-st"))$("gs-st").textContent=t;};st("بيسحب…");
   fetch(c.u+(c.u.indexOf("?")>-1?"&":"?")+"key="+encodeURIComponent(c.k)+"&after="+encodeURIComponent(lget("sheetLast","")||""),{redirect:"follow"})
   .then(function(r){return r.json();}).then(function(j){

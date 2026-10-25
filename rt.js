@@ -212,9 +212,23 @@
     });
   }
 
+  /* ---------- website bookings: the public site drops them in "bookings"; we import then delete ---------- */
+  function bookings() {
+    if (!user) return Promise.resolve([]);
+    return fs.collection("bookings").orderBy("at").limit(200).get().then(function (q) {
+      return q.docs.map(function (d) {
+        var r = d.data() || {}, at = r.at && r.at.toDate ? r.at.toDate().toISOString() : "";
+        return { id: d.id, msg: r.msg || "", name: r.name || "", phone: r.phone || "", branch: r.branch || "", day: r.day || "", time: r.time || "", service: r.service || "", page: r.page || "", at: at };
+      });
+    });
+  }
+  function doneBooking(id) { try { fs.collection("bookings").doc(id).delete().catch(function () {}); } catch (e) {} }
+
   /* ---------- what the app asks for ---------- */
   window.KRT = {
     blob: blob,
+    bookings: function () { return ready.then(bookings); },
+    doneBooking: doneBooking,
     use: function (name) {
       if (!configured) return Promise.reject({ code: "not_declared" });
       return ready.then(function () {

@@ -1,16 +1,26 @@
 rules_version = '2';
-// Only the clinic owner's login can read or write anything.
-// Replace the email below with the one you log in with.
+// Only the clinic owner's login can read or write clinic data.
+// The public website may only drop new booking requests into "bookings".
 service cloud.firestore {
   match /databases/{database}/documents {
     function owner() {
-      return request.auth != null && request.auth.token.email in ['YOUR_EMAIL@gmail.com'];
+      return request.auth != null && request.auth.token.email in ['karimelshourbagy1@github.io'];
+    }
+    function str(k, n) {
+      return !(k in request.resource.data) || (request.resource.data[k] is string && request.resource.data[k].size() <= n);
     }
     match /catalog/{key} {
       allow read, write: if owner();
     }
     match /data/users/{uid}/{rest=**} {
       allow read, write: if owner() && request.auth.uid == uid;
+    }
+    match /bookings/{id} {
+      allow read, update, delete: if owner();
+      allow create: if request.resource.data.keys().hasOnly(['msg','name','phone','branch','day','time','service','page','at'])
+        && request.resource.data.at == request.time
+        && str('msg', 2000) && str('name', 120) && str('phone', 120) && str('branch', 120)
+        && str('day', 120) && str('time', 120) && str('service', 120) && str('page', 120);
     }
     match /{other=**} {
       allow read, write: if false;

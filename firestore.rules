@@ -1,0 +1,19 @@
+rules_version = '2';
+// Only the clinic owner's login can read or write anything.
+// Replace the email below with the one you log in with.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner() {
+      return request.auth != null && request.auth.token.email in ['YOUR_EMAIL@gmail.com'];
+    }
+    match /catalog/{key} {
+      allow read, write: if owner();
+    }
+    match /data/users/{uid}/{rest=**} {
+      allow read, write: if owner() && request.auth.uid == uid;
+    }
+    match /{other=**} {
+      allow read, write: if false;
+    }
+  }
+}

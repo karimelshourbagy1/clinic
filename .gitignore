@@ -1,0 +1,4 @@
+# never commit patient data or backups
+*.csv
+*backup*
+*.env

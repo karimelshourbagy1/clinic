@@ -15,16 +15,17 @@
     "#krt-gate input{width:100%;padding:11px 12px;border:1px solid var(--line,#ccc);border-radius:10px;background:var(--sunk,#f5f5f5);direction:ltr;text-align:left}" +
     "#krt-gate button{padding:11px;border:0;border-radius:10px;background:var(--teal,#1D6B5F);color:#fff;font-weight:600;cursor:pointer}" +
     "#krt-gate button.l{background:none;color:var(--teal,#1D6B5F);padding:4px;font-weight:500}" +
-    "#krt-gate .e{color:var(--red,#B03F2C);font-size:.9rem;min-height:1.2em}";
+    "#krt-gate .e{color:var(--red,#B03F2C);font-size:.9rem;min-height:1.2em}#krt-wait{color:var(--muted,#666)}#krt-gate[data-s=wait] form,#krt-gate:not([data-s=wait]) #krt-wait{display:none}";
   document.head.appendChild(css);
   var gate = document.createElement("div");
   gate.id = "krt-gate";
+  gate.setAttribute("data-s", "wait");
   gate.innerHTML =
     '<form id="krt-f" autocomplete="on"><h1>عيادة د. كريم الشوربجي</h1><p>سجّل دخول عشان تفتح النظام.</p>' +
     '<input id="krt-em" type="email" placeholder="الإيميل" autocomplete="username" required>' +
     '<input id="krt-pw" type="password" placeholder="كلمة السر" autocomplete="current-password" required>' +
     '<button type="submit" id="krt-go">دخول</button><button type="button" class="l" id="krt-fg">نسيت كلمة السر؟</button>' +
-    '<div class="e" id="krt-er" role="alert"></div></form>';
+    '<div class="e" id="krt-er" role="alert"></div></form><div id="krt-wait">جاري الفتح…</div>';
   document.body.appendChild(gate);
   var $ = function (id) { return document.getElementById(id); };
   function err(t) { $("krt-er").textContent = t || ""; }
@@ -36,11 +37,14 @@
     return "حصلت مشكلة (" + c + ").";
   }
 
+  function reveal() { var p = document.getElementById("krt-pre"); if (p) p.remove(); }
+
   function clearLocal() {
     try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(LK) === 0) localStorage.removeItem(k); }); } catch (e) {}
   }
 
   if (!configured) {
+    gate.setAttribute("data-s", "form");
     $("krt-f").innerHTML = "<h1>النظام لسه مش متوصل</h1><p>محتاج إعدادات Firebase في ملف config.js.</p>";
   } else {
     firebase.initializeApp(FB);
@@ -59,11 +63,11 @@
       auth.sendPasswordResetEmail(em).then(function () { err("بعتنالك رسالة على الإيميل تغيّر منها كلمة السر."); }, function (x) { err(authMsg(x)); });
     });
     auth.onAuthStateChanged(function (u) {
-      if (!u) { gate.hidden = false; if (user) { user = null; clearLocal(); location.reload(); } return; }
+      if (!u) { gate.setAttribute("data-s", "form"); gate.hidden = false; if (user) { user = null; clearLocal(); location.reload(); } return; }
       var last = null; try { last = localStorage.getItem(UK); } catch (e) {}
       if (last && last !== u.uid) { clearLocal(); try { localStorage.setItem(UK, u.uid); } catch (e) {} location.reload(); return; }
       try { localStorage.setItem(UK, u.uid); } catch (e) {}
-      user = u; gate.hidden = true; addLogout(); readyRes(u);
+      user = u; gate.hidden = true; reveal(); addLogout(); readyRes(u);
     });
   }
 

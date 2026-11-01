@@ -1232,7 +1232,7 @@ function modeFor(c,k){
   if(k==="i")return{mode:c.injMode,pct:+c.injPct||0,matBy:c.injMatBy};
   return{mode:c.procMode,pct:+c.procPct||0,matBy:c.procMatBy};
 }
-function payout(c,k,price,raw){
+function payout(c,k,price,raw,cc){
   price=+price||0;raw=+raw||0;
   if(!c)return{doc:0,unknown:true,matOnMe:0};
   if(k==="s")return{doc:price-raw,matOnMe:0,surg:true};
@@ -1240,6 +1240,8 @@ function payout(c,k,price,raw){
   if(m.mode==="daily")return{doc:0,daily:true,matOnMe:0};
   if(m.mode==="split")return{doc:price*m.pct/100,matOnMe:0};
   if(m.mode==="grossPct")return{doc:price*(1-(+c.taxPct||0)/100)*m.pct/100,matOnMe:0};
+  if(m.mode==="costPct"){var cost=(cc!=null&&cc!=="")?(+cc||0):raw,base=price/(1+(+c.taxPct||0)/100)-cost-(price>0?(+c.fixedCost||0):0);
+    return{doc:Math.max(0,base)*m.pct/100,matOnMe:0,vat:price-price/(1+(+c.taxPct||0)/100),cost:cost,fixed:price>0?(+c.fixedCost||0):0,base:base};}
   var mine=m.matBy==="doctor",L=mine?loaded(raw):0;
   return{doc:(price-L)*m.pct/100+L,matOnMe:mine?raw:0};
 }
@@ -1263,7 +1265,7 @@ function itemsTotals(items,c,paidIn,credit){
   items.forEach(function(it){gross+=(+it.price||0);list+=(+it.listPrice||+it.price||0);if(!it.course)raw+=(+it.mat||0);});
   var paid=(paidIn===""||paidIn==null)?(credit?0:gross):(+paidIn||0);if(!credit&&!paid)paid=gross;
   var due=credit?Math.max(0,gross-paid):0,f=credit?1:(gross>0?paid/gross:1),net=0,daily=false,matOnMe=0;
-  items.forEach(function(it){if(it.course)return;var r=payout(c,it.k||"p",(+it.price||0)*f,(+it.mat||0));if(r.daily)daily=true;net+=r.doc||0;matOnMe+=r.matOnMe||0;});
+  items.forEach(function(it){if(it.course)return;var r=payout(c,it.k||"p",(+it.price||0)*f,(+it.mat||0),it.cc);if(r.daily)daily=true;net+=r.doc||0;matOnMe+=r.matOnMe||0;});
   return{gross:gross,list:list,disc:Math.max(0,list-gross),paid:paid,due:due,raw:raw,net:net,profit:net-matOnMe,daily:daily,unknown:!c};
 }
 function visitTotals(v){return itemsTotals(v.items||[],clinic(v.clinicId),v.paid,v.credit);}
@@ -1723,6 +1725,8 @@ function openItem(ref,editIx){
   }
   var rec=ex&&ex.rec?clone(ex.rec):{};
   if(s&&s.k!=="k")html+=recSection(s,rec);
+  var isCP=c&&modeFor(c,s?s.k:(ex&&ex.k)||"p").mode==="costPct";
+  if(isCP)html+='<div><label class="f" for="it-cc">تكلفة المركز للجلسة (Total cost من شيت '+esc(c.name)+')</label><input id="it-cc" type="number" step="1" placeholder="لو فاضي هيستخدم تمن الماتريال" value="'+(ex&&ex.cc!=null&&ex.cc!==""?esc(ex.cc):"")+'"><div class="m">نسبتك = (السعر من غير الضريبة − التكلفة دي − التكلفة الثابتة '+fmt(+c.fixedCost||0)+' ج) × '+modeFor(c,s?s.k:"p").pct+'٪</div></div>';
   html+='<div class="calc" id="it-calc"></div>'+
     '<div class="pricebox"><div><label class="f" for="it-price">السعر للحالة</label><input id="it-price" type="number" step="50" value="'+Math.round(st.price)+'"></div>'+
     '<div><button class="btn s" type="button" id="it-reset">رجّع للسعر المتوقع</button></div></div>'+
@@ -1740,7 +1744,7 @@ function openItem(ref,editIx){
     function calc(){
       if(s&&$("it-prod")){var key=st.rows.map(function(r){return r.m;}).join(",");if(key!==lastProd){lastProd=key;$("it-prod").innerHTML=prodPanel(st.rows);}}
       var r=raw(),L=loaded(r),pr=+$("it-price").value||0,fin=st.disc?discounted(pr,st.discPct):pr;
-      var po=payout(c,s?s.k:"p",fin,r),exp=expected();
+      var ccv=$("it-cc")?$("it-cc").value:"",po=payout(c,s?s.k:"p",fin,r,ccv),exp=expected();
       $("it-calc").innerHTML=
         (s&&s.k==="s"?'<div class="tot"><span>تكاليف العملية (أوضة + تخدير + مساعد + مستلزمات)</span><b class="num">'+fmt(r)+'</b></div>':
         '<div class="tot"><span>تمن الماتريال (سعر الشراء)</span><span class="num">'+fmt(r)+'</span></div>'+
@@ -1748,6 +1752,7 @@ function openItem(ref,editIx){
         '<div class="tot"><span>السعر المتوقع للحالة</span><b class="num gold">'+fmt(exp)+'</b></div>'+
         (pr!==exp?'<div class="tot"><span>إنت غيّرت السعر</span><span class="num '+(pr>exp?"teal":"red")+'">'+(pr>exp?"+":"−")+fmt(Math.abs(pr-exp))+'</span></div>':'')+
         (st.disc?'<div class="tot"><span>بعد خصم '+st.discPct+'٪</span><b class="num">'+fmt(fin)+'</b></div>':'')+
+        (po.base!=null?'<div class="tot"><span>− الضريبة '+(+c.taxPct||0)+'٪</span><span class="num">'+fmt(po.vat)+'</span></div><div class="tot"><span>− تكلفة المركز</span><span class="num">'+fmt(po.cost)+'</span></div><div class="tot"><span>− التكلفة الثابتة</span><span class="num">'+fmt(po.fixed)+'</span></div><div class="tot"><span>الوعاء اللي بتاخد منه نسبتك</span><b class="num">'+fmt(po.base)+'</b></div>':'')+
         '<div class="tot big" style="border-top:1px dashed var(--line);padding-top:6px"><span>صافي جيبك'+(c?" في "+esc(c.name):"")+'</span><b class="num gold">'+(po.daily?"ضمن الثابت":fmt(po.doc))+'</b></div>'+
         (po.matOnMe?'<div class="tot"><span>ربحك بعد ما تطلّع تمن الماتريال</span><b class="num '+((po.doc-po.matOnMe)>0?"teal":"red")+'">'+fmt(po.doc-po.matOnMe)+'</b></div>':'')+
         (!c?'<div class="m">اختار المكان في الشيت عشان يتحسب صافيك.</div>':'');
@@ -1759,6 +1764,7 @@ function openItem(ref,editIx){
       manual.forEach(function(r){st.rows.push(r);});mt.redraw();
       if(!st.touched)$("it-price").value=Math.round(expected());calc();});
     $("it-price").addEventListener("input",function(){st.touched=true;calc();});
+    if($("it-cc"))$("it-cc").addEventListener("input",calc);
     $("it-reset").addEventListener("click",function(){st.touched=false;$("it-price").value=Math.round(expected());calc();});
     $("it-disc").addEventListener("change",function(){st.disc=$("it-disc").checked;$("it-disc-wrap").classList.toggle("disc-on",st.disc);calc();});
     $("it-disc-wrap").classList.toggle("disc-on",st.disc);
@@ -1767,7 +1773,7 @@ function openItem(ref,editIx){
       var pr=+$("it-price").value||0,fin=st.disc?discounted(pr,st.discPct):pr;
       var it={id:ex?ex.id:uid("it"),sid:s?s.id:(ex?ex.sid:""),pk:p?p.id:(ex?ex.pk:""),name:name,k:s?s.k:(ex&&ex.k?ex.k:"p"),qty:st.qty,u:hasUnit?(s.u||"وحدة"):"",
         mats:st.rows.filter(function(r){return +r.q>0;}).map(function(r){var m=mat(r.m);return{m:r.m,q:+r.q,uc:Math.round(uc(m)*100)/100,d:r.d?1:0};}),
-        mat:Math.round(raw()*100)/100,base:Math.round(expected()),listPrice:pr,price:fin,disc:st.disc,discPct:st.discPct,note:$("it-note").value.trim()};
+        mat:Math.round(raw()*100)/100,cc:$("it-cc")&&$("it-cc").value!==""?+$("it-cc").value:undefined,base:Math.round(expected()),listPrice:pr,price:fin,disc:st.disc,discPct:st.discPct,note:$("it-note").value.trim()};
       if(p){it.ses=packSessions(p);it.first=$("it-first")?$("it-first").checked:true;}
       if(s&&(Object.keys(rec.zones||{}).length||Object.keys(rec.set||{}).some(function(k){return rec.set[k];})||rec.lot||rec.react))it.rec=rec;
       if(ex)SH.v.items[editIx]=it;else SH.v.items.push(it);
@@ -2107,9 +2113,9 @@ function renderClinics(){
   $("set-clinics").innerHTML=CL.map(function(c){
     var r=[];
     r.push("كشف: "+(c.consultMode==="daily"?("ثابت "+fmt(c.hourRate)+" ج/ساعة"):c.consultMode==="grossPct"?(c.consultPct+"٪ من الإجمالي"):(c.consultPct+"٪"+(+c.consultPrice?" · "+fmt(c.consultPrice)+" ج":""))));
-    r.push("إجراء: "+(c.procMode==="grossPct"?(c.procPct+"٪ من الإجمالي"):(c.procPct+"٪ بعد الماتريال")));
+    r.push("إجراء: "+(c.procMode==="costPct"?(c.procPct+"٪ بعد الضريبة والتكاليف"):c.procMode==="grossPct"?(c.procPct+"٪ من الإجمالي"):(c.procPct+"٪ بعد الماتريال")));
     r.push("حقن: "+(c.injMode==="grossPct"?(c.injPct+"٪"):(c.injPct+"٪ بعد الماتريال")));
-    if(+c.taxPct)r.push("ضريبة "+c.taxPct+"٪");
+    if(+c.taxPct)r.push("ضريبة "+c.taxPct+"٪");if(+c.fixedCost)r.push("تكلفة ثابتة "+fmt(c.fixedCost)+" ج للجلسة");
     if((c.sch||[]).length)r.push("المواعيد: "+c.sch.map(function(x){return WD[x.d]+" "+(x.from||"")+(x.to?"–"+x.to:"")+(x.od?" (بالحجز)":"");}).join("، "));
     return '<button class="it" type="button" data-c="'+esc(c.id)+'"><div class="main"><div class="t">'+esc(c.name)+(c.active?'':' <span class="pill">سابقاً</span>')+'</div><div class="m">'+esc(r.join(" · "))+'</div></div></button>';}).join("")||'<div class="empty card">الأماكن بتتحمل من حسابك…</div>';
   qa("[data-c]",$("set-clinics")).forEach(function(b){b.addEventListener("click",function(){editClinic(b.getAttribute("data-c"));});});
@@ -2122,15 +2128,15 @@ function editClinic(id){
   openDlg('<div class="dh"><div class="main"><h2>'+(id?"تعديل مكان":"مكان جديد")+'</h2></div><button class="btn s ghost" type="button" id="cl-x">✕</button></div><div class="db">'+
     fld("c-name","اسم المكان","text",c.name)+
     '<h3>الكشف</h3><div class="grid g2">'+
-    fld("cc-mode","نظام الكشف","select",null,opt("split","نسبة من الكشف",c.consultMode)+opt("daily","ثابت بالساعة",c.consultMode)+opt("grossPct","نسبة من الإجمالي بعد الضريبة",c.consultMode))+
+    fld("cc-mode","نظام الكشف","select",null,opt("split","نسبة من الكشف",c.consultMode)+opt("daily","ثابت بالساعة",c.consultMode)+opt("grossPct","نسبة من الإجمالي بعد الضريبة",c.consultMode)+opt("costPct","نسبة بعد الضريبة والتكاليف (نظام DAO)",c.consultMode))+
     fld("cc-pct","نسبتك %","number",c.consultPct)+fld("cc-price","سعر الكشف في المكان ده","number",c.consultPrice)+
     fld("cc-rate","الثابت للساعة","number",c.hourRate)+fld("cc-mult","الضعف (حد بدء التقسيم)","number",c.hourMult)+fld("cc-over","نسبتك فوق الحد %","number",c.overPct)+'</div>'+
     '<h3>الإجراءات</h3><div class="grid g2">'+
-    fld("cp-mode","نظام الإجراء","select",null,opt("netSplit","نسبة بعد خصم الماتريال",c.procMode)+opt("grossPct","نسبة من الإجمالي",c.procMode))+
+    fld("cp-mode","نظام الإجراء","select",null,opt("netSplit","نسبة بعد خصم الماتريال",c.procMode)+opt("grossPct","نسبة من الإجمالي",c.procMode)+opt("costPct","نسبة بعد الضريبة والتكاليف (نظام DAO)",c.procMode))+
     fld("cp-pct","نسبتك %","number",c.procPct)+fld("cp-mat","الماتريال على مين","select",null,opt("doctor","عليّا أنا",c.procMatBy)+opt("clinic","على المركز",c.procMatBy))+
-    fld("c-tax","نسبة الضريبة %","number",c.taxPct)+'</div>'+
+    fld("c-tax","نسبة الضريبة %","number",c.taxPct)+fld("c-fix","التكلفة الثابتة للجلسة (Fixed cost) — لنظام DAO","number",c.fixedCost||0)+'</div>'+
     '<h3>الحقن (بوتوكس وفيلر وبوسترز)</h3><div class="grid g2">'+
-    fld("ci-mode","نظام الحقن","select",null,opt("netSplit","نسبة بعد خصم الماتريال",c.injMode)+opt("grossPct","نسبة من الإجمالي",c.injMode))+
+    fld("ci-mode","نظام الحقن","select",null,opt("netSplit","نسبة بعد خصم الماتريال",c.injMode)+opt("grossPct","نسبة من الإجمالي",c.injMode)+opt("costPct","نسبة بعد الضريبة والتكاليف (نظام DAO)",c.injMode))+
     fld("ci-pct","نسبتك %","number",c.injPct)+fld("ci-mat","الماتريال على مين","select",null,opt("doctor","عليّا أنا",c.injMatBy)+opt("clinic","على المركز",c.injMatBy))+
     fld("c-act","الحالة","select",null,opt("1","شغال",c.active?1:0)+opt("0","سابقاً",c.active?1:0))+'</div>'+
     '<h3>مواعيدك في المكان ده</h3><div class="chips" id="cs-days">'+WD.map(function(w,i){return '<button type="button" data-d="'+i+'" aria-pressed="'+(c.sch||[]).some(function(x){return +x.d===i;})+'">'+w+'</button>';}).join("")+'</div>'+
@@ -2150,7 +2156,7 @@ function editClinic(id){
       var od=$("cs-od").checked?1:0,sch=days.map(function(d){var o={d:d,from:$("cs-from").value,to:$("cs-to").value};if(od)o.od=1;return o;});
       upsert(CL,{id:c.id||uid("cl"),sch:sch,name:n,active:+$("c-act").value?1:0,consultMode:$("cc-mode").value,consultPct:+$("cc-pct").value||0,consultPrice:+$("cc-price").value||0,
         hourRate:+$("cc-rate").value||0,hourMult:+$("cc-mult").value||2,overPct:+$("cc-over").value||0,procMode:$("cp-mode").value,procPct:+$("cp-pct").value||0,procMatBy:$("cp-mat").value,
-        injMode:$("ci-mode").value,injPct:+$("ci-pct").value||0,injMatBy:$("ci-mat").value,taxPct:+$("c-tax").value||0,note:$("c-note").value.trim(),slot:+$("cs-slot").value||20,addr:$("c-addr").value.trim()});
+        injMode:$("ci-mode").value,injPct:+$("ci-pct").value||0,injMatBy:$("ci-mat").value,taxPct:+$("c-tax").value||0,fixedCost:+$("c-fix").value||0,note:$("c-note").value.trim(),slot:+$("cs-slot").value||20,addr:$("c-addr").value.trim()});
       saveCat("clinics");renderClinics();renderServices();renderMoney();closeDlg();});
   });
 }
@@ -3233,7 +3239,7 @@ function rangeOf(k){var t0=today();if(k==="d")return [t0,t0];if(k==="w")return [
 function stats(from,to){var r={visits:0,paid:0,net:0,newP:0,retP:0,proc:0,ticket:0,apps:0,show:0,miss:0,bySvc:{},bySrc:{}},seen={};
   PAT.forEach(function(p){var vs=vsorted(p).slice().reverse();vs.forEach(function(v,i){if(!inRange(v.d,from,to))return;var t=visitTotals(v);r.visits++;r.paid+=t.paid;r.net+=t.net;
     if(i===0)r.newP++;else if(!seen[p.id])r.retP++;seen[p.id]=1;
-    (v.items||[]).forEach(function(it){var s=svc(it.sid);if(s&&s.k!=="k")r.proc++;var k=it.name||"—";var o=r.bySvc[k]||(r.bySvc[k]={n:0,paid:0,net:0});o.n++;o.paid+=(+it.price||0);var pr=payout(clinic(v.clinicId),it.k||"p",+it.price||0,+it.mat||0);o.net+=pr.doc||0;});});});
+    (v.items||[]).forEach(function(it){var s=svc(it.sid);if(s&&s.k!=="k")r.proc++;var k=it.name||"—";var o=r.bySvc[k]||(r.bySvc[k]={n:0,paid:0,net:0});o.n++;o.paid+=(+it.price||0);var pr=payout(clinic(v.clinicId),it.k||"p",+it.price||0,+it.mat||0,it.cc);o.net+=pr.doc||0;});});});
   monthsIn(from,to).forEach(function(m){dailySettle(m).forEach(function(x){if(inRange(x.day.d,from,to))r.net+=x.pay;});});
   APP.forEach(function(a){if(!inRange(a.d,from,to)||a.d>today())return;if(a.st==="cancel"||a.st==="req")return;r.apps++;if(a.st==="done"||a.st==="arrived"||a.st==="inroom")r.show++;if(a.st==="noshow")r.miss++;});
   r.ticket=r.visits?r.paid/r.visits:0;return r;}
@@ -3791,6 +3797,7 @@ function renderSes(){var v=SH.v,s=v.ses||{};
   $("ses-t").innerHTML=SES_T.map(function(x){return '<button type="button" role="tab" data-v="'+x[0]+'" aria-selected="'+(s.type===x[0])+'">'+esc(x[1])+'</button>';}).join("");
   var f=SES_F[s.type]||[];$("ses-body").hidden=!s.type;
   $("ses-f").innerHTML=s.type?'<div><label class="f" for="ses-no">رقم الجلسة</label><input id="ses-no" inputmode="numeric" value="'+esc(s.no||"")+'"></div>'+f.map(function(x){return '<div><label class="f" for="ses-'+x[0]+'">'+esc(x[1])+'</label><input id="ses-'+x[0]+'" data-k="'+x[0]+'" placeholder="'+esc(x[2])+'" value="'+esc(s[x[0]]||"")+'"></div>';}).join(""):"";
+  if(s.type==="laser"){$("ses-f").insertAdjacentHTML("beforeend",'<div style="grid-column:1/-1" id="mo-box"></div>');moRender();}
   var lv=s.type?lastSes(s.type):null;
   $("ses-last").innerHTML=lv?'<span>الجلسة اللي فاتت ('+esc(lv.d||"")+'):</span> '+sesLine(lv).replace(/^<div class="m" style="margin-top:4px">/,"").replace(/<\/div>$/,"")+' <button class="btn s" type="button" id="ses-copy">نفس الإعدادات</button>':"";
   if($("ses-copy"))$("ses-copy").addEventListener("click",function(){var o=clone(lv.ses);delete o.react;o.no=String((+lv.ses.no||0)+1||"");SH.v.ses=o;touch();renderSes();});
@@ -3801,6 +3808,44 @@ function renderSes(){var v=SH.v,s=v.ses||{};
     var tt=document.createElementNS("http://www.w3.org/2000/svg","title");tt.textContent=ZN[k]||k;el.appendChild(tt);});
   $("ses-zl").innerHTML=zs.length?zs.map(function(k){return '<button type="button" class="pill g" data-k="'+esc(k)+'">'+esc(ZN[k]||k)+' ✕</button>';}).join(" "):'<span class="m">اضغط على المنطقة في الرسم عشان تتعلّم</span>';
   $("ses-note").value=s.note||"";}
+/* DEKA Motus PRO parameters — Dr Karim's own algorithm (from Motus_Pro_App), suggestions to start from, then adjust by test patch */
+var MO={skin:3,area:"normal",hair:"thick",session:1,spot:18,fo:0,po:0,pid:null};
+var MO_OPT={skin:[[2,"I – II","أبيض / فاتح"],[3,"III","قمحي فاتح"],[4,"IV","قمحي غامق"],[5,"V – VI","أسمر / داكن"],[6,"Tanned ☀️","واخد تان قريب"]],
+  area:[["normal","جسم عادي","نفس لون البشرة"],["dark","بيكيني / أندر آرم غامق","أغمق من الجسم"],["beard","ذقن رجالي","كثافة عالية جداً"],["face","وجه","منطقة حساسة"]],
+  hair:[["thick","سميك وخشن","Coarse"],["medium","متوسط","Medium"],["fine","رفيع / وبري","Fine"]],
+  session:[[1,"الجلسة 1 – 2","بداية"],[2,"الجلسة 3 – 4","متوسطة"],[3,"الجلسة 5+","متقدمة"]],
+  spot:[[18,"18 mm","الأساسية"],[15,"15 mm","المتوسطة"],[12,"12 mm","الضيقة"]]};
+var MO_T={skin:"لون الجلد (Fitzpatrick)",area:"المنطقة",hair:"سُمك الشعرة",session:"رقم الجلسة",spot:"مقاس العدسة (Spot)"};
+function moCalc(st){
+  var laser=(st.skin>=4||st.area==="dark"||st.area==="beard")?"YAG":"ALEX",pw=20,fl=12,notes=[];
+  if(laser==="YAG"){pw=st.hair==="thick"?35:(st.hair==="medium"?25:15);if(st.skin>=5||st.area==="beard")pw=Math.max(pw,40);
+    fl=st.skin===3?16:(st.skin===4?15:13);if(st.area==="beard")fl-=1;}
+  else{pw=st.hair==="thick"?20:(st.hair==="medium"?12:5);fl=st.skin===2?12:10;}
+  if(st.session===2){pw-=5;fl+=2;}if(st.session===3){pw-=10;fl+=4;}
+  if(st.hair==="fine")fl+=1;if(st.spot===15)fl+=4;if(st.spot===12)fl+=8;
+  var fp=Math.max(3,Math.min(60,pw+st.po)),ff=fl+st.fo;
+  if(st.spot===18)ff=laser==="YAG"?Math.min(24,Math.max(10,ff)):Math.min(18,Math.max(8,ff));
+  var hz=(st.area==="beard"||st.area==="dark"||st.session===1)?1.0:1.5;
+  notes.push(laser==="YAG"?"تم اختيار YAG 1064 لأمان الجلد ومنع التصبغات.":"تم اختيار ALEX 755 لسرعة استجابته مع البشرة الفاتحة.");
+  if(st.area==="beard")notes.push("تنبيه الذقن: كثافة عالية؛ اشتغل بـ 1.0 Hz وتبريد عالي.");
+  if(st.hair==="fine"&&fp<=10)notes.push("تم تقصير النبضة إلى "+fp+" ms لتركيز الطاقة على الشعرة الرفيعة.");
+  notes.push("الـ Endpoint: احمرار وتورم خفيف حول منبت الشعرة فقط.");
+  return{laser:laser,wl:laser==="YAG"?"1064":"755",flu:ff,hz:hz,pw:fp,notes:notes};}
+function moSeed(){var p=SH.p,s=SH.v.ses||{};if(MO.pid===(p.id||"new")+"|"+(SH.v.vid||""))return;MO.pid=(p.id||"new")+"|"+(SH.v.vid||"");MO.fo=0;MO.po=0;
+  var fz={"I":2,"II":2,"III":3,"IV":4,"V":5,"VI":5}[p.fitz||""];if(fz)MO.skin=fz;
+  var n=+s.no||0;if(n)MO.session=n>=5?3:(n>=3?2:1);var sp=parseFloat(s.spot);if(sp===12||sp===15||sp===18)MO.spot=sp;}
+function moRender(){var box=$("mo-box");if(!box)return;moSeed();var r=moCalc(MO);
+  box.innerHTML='<details class="brief"'+(box.getAttribute("data-open")!=="0"?' open':'')+'><summary><span>⚡ حاسبة باراميترز DEKA Motus PRO</span><span class="m">'+r.laser+" "+r.wl+" · "+r.flu.toFixed(1)+" J/cm² · "+r.pw+" ms · "+r.hz.toFixed(1)+' Hz</span></summary><div class="brief-b" style="max-height:none;display:block">'+
+    Object.keys(MO_OPT).map(function(k){return '<div style="margin-bottom:8px"><div class="m" style="margin-bottom:4px">'+MO_T[k]+'</div><div class="chips">'+MO_OPT[k].map(function(o){return '<button type="button" data-mk="'+k+'" data-mv="'+o[0]+'" aria-pressed="'+(String(MO[k])===String(o[0]))+'" title="'+esc(o[2])+'">'+esc(o[1])+'</button>';}).join("")+'</div></div>';}).join("")+
+    '<div class="grid g2" style="margin:8px 0"><div class="tot"><span>الليزر</span><b class="num">'+r.laser+' '+r.wl+'</b></div><div class="tot"><span>Fluence</span><b class="num">'+r.flu.toFixed(1)+' J/cm²</b></div><div class="tot"><span>Pulse duration</span><b class="num">'+r.pw+' ms</b></div><div class="tot"><span>Frequency</span><b class="num">'+r.hz.toFixed(1)+' Hz</b></div></div>'+
+    '<div class="m" style="margin-bottom:4px">تعديل فوري حسب الـ Test Patch:</div><div class="row" style="gap:6px;margin-bottom:8px"><button class="btn s" type="button" data-ma="weak">تفاعل ضعيف ➕</button><button class="btn s" type="button" data-ma="hot">لسعة شديدة ➖</button><button class="btn s ghost" type="button" data-ma="reset">إرجاع</button></div>'+
+    '<ul style="margin:0 0 8px;padding-inline-start:18px">'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join("")+'</ul>'+
+    '<button class="btn s gold" type="button" id="mo-use">حط الإعدادات دي في الجلسة</button> <span class="m">اقتراح للبداية، والقرار بعد الـ Test Patch ليك.</span></div></details>';
+  box.querySelector("details").addEventListener("toggle",function(e){box.setAttribute("data-open",e.target.open?"1":"0");});
+  qa("[data-mk]",box).forEach(function(b){b.addEventListener("click",function(){var k=b.getAttribute("data-mk"),v=b.getAttribute("data-mv");MO[k]=isNaN(+v)?v:+v;MO.fo=0;MO.po=0;moRender();});});
+  qa("[data-ma]",box).forEach(function(b){b.addEventListener("click",function(){var a=b.getAttribute("data-ma");if(a==="weak"){MO.fo+=2;MO.po-=5;}else if(a==="hot"){MO.fo-=2;MO.po+=10;}else{MO.fo=0;MO.po=0;}moRender();});});
+  $("mo-use").addEventListener("click",function(){var r=moCalc(MO),v={dev:"DEKA Motus PRO "+(r.laser==="YAG"?"Nd:YAG":"Alex"),wl:r.wl,flu:r.flu.toFixed(1),pw:String(r.pw),spot:String(MO.spot),hz:r.hz.toFixed(1)};
+    Object.keys(v).forEach(function(k){sesSet(k,v[k]);var i=$("ses-"+k);if(i)i.value=v[k];});toast("اتحطت في الجلسة — عدّلها لو محتاج");});}
 function sesSet(k,val){var s=SH.v.ses||(SH.v.ses={});s[k]=val;touch();}
 $("ses-t").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var t=b.getAttribute("data-v"),s=SH.v.ses||{};
   if(s.type===t)return;SH.v.ses=Object.assign({},{type:t,zones:s.zones||[],note:s.note||"",no:s.no||""});

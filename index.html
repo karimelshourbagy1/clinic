@@ -57,7 +57,7 @@ html[dir=rtl] .ck-t b,html[dir=rtl] .ck-t small{text-align:right}
 #sh-hist>.hv{position:relative}
 #sh-hist>.hv::before{content:"";position:absolute;inset-inline-start:-22px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:3px solid var(--gold)}
 #sh-hist>.hv.hv-ses::before{border-color:var(--teal)}
-</style></head><body>
+</style></head><body><div id="lx-bg" aria-hidden="true"><i></i><i></i><i></i><s></s><b></b><u style="left:8%;bottom:5%;animation-duration:22s;animation-delay:-3s"></u><u style="left:19%;bottom:0%;animation-duration:30s;animation-delay:-11s"></u><u style="left:33%;bottom:10%;animation-duration:26s;animation-delay:-7s"></u><u style="left:47%;bottom:2%;animation-duration:34s;animation-delay:-19s"></u><u style="left:58%;bottom:8%;animation-duration:24s;animation-delay:-5s"></u><u style="left:71%;bottom:0%;animation-duration:29s;animation-delay:-15s"></u><u style="left:84%;bottom:6%;animation-duration:27s;animation-delay:-9s"></u><u style="left:93%;bottom:3%;animation-duration:32s;animation-delay:-21s"></u><u style="left:26%;bottom:4%;animation-duration:36s;animation-delay:-25s"></u><u style="left:64%;bottom:1%;animation-duration:31s;animation-delay:-13s"></u></div>
 <title>عيادة د. كريم الشوربجي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -572,11 +572,78 @@ dialog{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(10,20,40,.25)}
 .lz-zl{font-size:.82rem;color:#7FD8FF;margin-bottom:2px}
 .lz-act{display:flex;flex-wrap:wrap;gap:8px}
 .lz-warn{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:10px 12px;font-size:.86rem}
+
+/* ===== theme v4: luxe black + champagne gold, with the doctor's photos ===== */
+:root{--bg:#F4EFE5;--surface:#FFFDF8;--glass:rgba(255,253,248,.86);--sunk:#F1EADD;--ink:#1C1A16;--muted:#776E60;--line:#E4D9C6;--line2:#EDE5D7;
+  --gold:#9C7A35;--gold-soft:#F3E8D0;--teal:#1D6B5F;--teal-soft:#E0EEE9;--navy:#14120E;--navy2:#3A3022;--tl:#B8924A;
+  --lx1:#E9D3A0;--lx2:#B8924A;--lx-bgimg:.06;--shadow:0 1px 2px rgba(60,45,20,.05),0 10px 30px rgba(60,45,20,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#09090A;--surface:#151517;--glass:rgba(21,21,23,.80);--sunk:#121214;--ink:#EEE9DF;--muted:#A39B8D;--line:#2B2822;--line2:#1F1D19;
+  --gold:#D9B66F;--gold-soft:rgba(217,182,111,.12);--teal:#6FCDBD;--teal-soft:rgba(111,205,189,.12);--navy:#0E0D0B;--navy2:#2E2618;--tl:#D9B66F;--lx-bgimg:.10;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#09090A;--surface:#151517;--glass:rgba(21,21,23,.80);--sunk:#121214;--ink:#EEE9DF;--muted:#A39B8D;--line:#2B2822;--line2:#1F1D19;
+  --gold:#D9B66F;--gold-soft:rgba(217,182,111,.12);--teal:#6FCDBD;--teal-soft:rgba(111,205,189,.12);--navy:#0E0D0B;--navy2:#2E2618;--tl:#D9B66F;--lx-bgimg:.10;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.35)}
+html{background:var(--bg)}
+body{background:transparent}
+/* moving gold light + the doctor's portrait behind everything */
+#lx-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+#lx-bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+#lx-bg i:nth-child(1){width:46vmax;height:46vmax;top:-14vmax;left:-10vmax;background:radial-gradient(circle,rgba(217,182,111,.38),transparent 65%);animation:lxA 38s ease-in-out infinite alternate}
+#lx-bg i:nth-child(2){width:38vmax;height:38vmax;bottom:-16vmax;right:-8vmax;background:radial-gradient(circle,rgba(160,120,60,.30),transparent 65%);animation:lxB 46s ease-in-out infinite alternate}
+#lx-bg i:nth-child(3){width:30vmax;height:30vmax;top:30%;left:35%;background:radial-gradient(circle,rgba(111,205,189,.10),transparent 65%);animation:lxA 54s ease-in-out infinite alternate-reverse}
+#lx-bg b{position:absolute;left:0;bottom:0;height:78vh;aspect-ratio:569/640;background:url(img/suit-cut.jpg) center/cover;opacity:var(--lx-bgimg);filter:grayscale(.35);
+  -webkit-mask:linear-gradient(to top,#000 35%,transparent),linear-gradient(to left,transparent,#000 40%);-webkit-mask-composite:source-in;mask:linear-gradient(to top,#000 35%,transparent);}
+#lx-bg s{position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(217,182,111,.035) 0 1px,transparent 1px 22px)}
+#lx-bg u{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--lx1);box-shadow:0 0 8px var(--lx1);opacity:0;animation:lxDot linear infinite}
+@keyframes lxA{to{transform:translate(12vmax,8vmax) scale(1.15)}}
+@keyframes lxB{to{transform:translate(-10vmax,-12vmax) scale(1.2)}}
+@keyframes lxDot{0%{transform:translateY(0);opacity:0}15%{opacity:.8}85%{opacity:.5}100%{transform:translateY(-70vh);opacity:0}}
+@media (prefers-reduced-motion:reduce){#lx-bg i,#lx-bg u,.lx-ph img{animation:none!important}}
+.app,main.wrap{background:transparent}
+.side{background:var(--glass);border-inline-end:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.card,.lz-card,.qt{background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow)}
+.logo{background:linear-gradient(135deg,#F3DDA6,#B8924A 55%,#8A6A2C)}
+.brand b{background:linear-gradient(90deg,var(--gold),var(--lx2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lx-me{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(217,182,111,.14),transparent)}
+.lx-me img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--lx2);box-shadow:0 0 0 3px rgba(217,182,111,.18)}
+.lx-me b{display:block;font-family:var(--f-display);font-size:.86rem}.lx-me span{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
+.btn.gold{background:linear-gradient(135deg,#F0D79C,#C9A35A 50%,#9C7A35);border-color:#B8924A;color:#1a1409;box-shadow:0 6px 18px rgba(184,146,74,.28)}
+:root[data-theme="dark"] .btn.gold{color:#1a1409}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.gold{color:#1a1409}}
+.btn.gold:hover{filter:brightness(1.06)}
+.tabs button svg{background:var(--gold-soft);color:var(--gold)}
+.tabs button[aria-selected="true"]{background:linear-gradient(90deg,transparent,var(--gold-soft));border-inline-start:3px solid var(--lx2)}
+.tabs button[aria-selected="true"] svg{background:linear-gradient(135deg,#F0D79C,#B8924A);color:#1a1409}
+.hero{background:radial-gradient(120% 160% at 0% 0%,rgba(217,182,111,.30),transparent 55%),linear-gradient(135deg,#0E0D0B,#2B2316);border:1px solid rgba(217,182,111,.28);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.hero .hx.n b{color:#F0D79C}
+.bill .hd,.blk-h .n{background:linear-gradient(135deg,#1A1610,#3A3022)}
+.sec-h h2::before{background:linear-gradient(180deg,#F0D79C,#9C7A35)}
+.qt:hover{border-color:var(--lx2);box-shadow:0 8px 24px rgba(184,146,74,.15)}
+/* home banner with the doctor's photos */
+#v-home>.spread.lx-hb{position:relative;overflow:hidden;min-height:230px;padding:28px 30px;padding-inline-end:min(250px,34%);border:1px solid rgba(217,182,111,.35);border-radius:20px;color:#F3EEE4;align-items:flex-end;
+  background:radial-gradient(90% 140% at 100% 0%,rgba(217,182,111,.22),transparent 60%),linear-gradient(120deg,#0C0C0D 30%,#1E1A14);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+#v-home>.spread.lx-hb>*{position:relative;z-index:2}
+#v-home>.spread.lx-hb h1{font-size:1.7rem!important;background:linear-gradient(90deg,#F7E7C0,#D9B66F);-webkit-background-clip:text;background-clip:text;color:transparent}
+#v-home>.spread.lx-hb .m{color:rgba(243,238,228,.72)}
+.lx-hb .lx-tag{display:inline-block;font-size:.66rem;letter-spacing:.22em;color:#D9B66F;margin-bottom:6px;font-family:var(--f-display)}
+.lx-hb .btn:not(.gold){background:rgba(255,255,255,.06);border-color:rgba(217,182,111,.4);color:#F3EEE4}
+.lx-ph{position:absolute!important;z-index:1!important;left:0;bottom:0;height:100%;aspect-ratio:569/640;pointer-events:none;
+  -webkit-mask:linear-gradient(to left,transparent,#000 35%);mask:linear-gradient(to left,transparent,#000 35%)}
+.lx-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;opacity:0;animation:lxFade 16s infinite}
+.lx-ph img:nth-child(2){animation-delay:8s}
+@keyframes lxFade{0%{opacity:0;transform:scale(1.06)}8%{opacity:1}50%{opacity:1}58%{opacity:0;transform:scale(1)}100%{opacity:0}}
+.lx-hb .lx-line{position:absolute;inset:auto 28px 0 28px;height:1px;background:linear-gradient(90deg,transparent,#D9B66F,transparent);z-index:2}
+@media(max-width:860px){#v-home>.spread.lx-hb{min-height:200px;padding:20px 18px;padding-inline-end:42%;flex-direction:column;align-items:stretch;justify-content:flex-end}
+  .lx-ph{height:100%}.lx-hb .row{flex-wrap:wrap}.lx-hb .lx-tag{font-size:.56rem;letter-spacing:.14em}#v-home>.spread.lx-hb h1{font-size:1.35rem!important}}
+#v-home>.spread:first-child{border-inline-start:1px solid rgba(217,182,111,.35)}
+@media(max-width:860px){.lx-me{display:none}}
+.lx-on{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 6px #4ADE80;margin-inline-end:5px;vertical-align:middle}
+.lx-me img{width:52px;height:52px}
 </style>
 
 <div class="app">
 <aside class="side">
-  <div class="brand"><span class="logo" role="img" aria-label="شعار د. كريم الشوربجي"></span><div><b>د. كريم الشوربجي</b><small>DERMATOLOGY · ANDROLOGY</small></div></div>
+  <div class="brand"><span class="logo" role="img" aria-label="شعار د. كريم الشوربجي"></span><div><b>د. كريم الشوربجي</b><small>DERMATOLOGY · ANDROLOGY</small></div></div><div class="lx-me"><img src="img/head.jpg" alt=""><div><b>أهلاً يا دكتور</b><span><i class="lx-on"></i>متصل الآن</span></div></div>
   <button class="btn gold side-new" id="btn-new" type="button">+ حالة جديدة</button>
   <button class="side-ck" id="ck-btn" type="button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span>بحث…</span><kbd>Ctrl K</kbd></button>
   <nav class="tabs" role="tablist" aria-label="أقسام النظام">
@@ -608,8 +675,8 @@ dialog{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(10,20,40,.25)}
 
 <!-- ========== HOME ========== -->
 <section id="v-home" role="tabpanel" aria-labelledby="t-home">
-  <div class="spread" style="margin-bottom:14px">
-    <div><h1 style="font-size:1.4rem" id="h-hi">أهلاً يا دكتور</h1><div class="m" id="h-date"></div></div>
+  <div class="spread lx-hb" style="margin-bottom:14px"><div class="lx-ph" aria-hidden="true"><img src="img/suit-cut.jpg" alt=""><img src="img/scrubs-cut.jpg" alt=""></div><span class="lx-line" aria-hidden="true"></span>
+    <div><span class="lx-tag">DR. KARIM ELSHOURBAGY · CLINIC</span><h1 style="font-size:1.4rem" id="h-hi">أهلاً يا دكتور</h1><div class="m" id="h-date"></div></div>
     <div class="row"><button class="btn" id="h-appt" type="button">+ موعد</button><button class="btn gold" id="h-new" type="button">+ حالة جديدة</button></div>
   </div>
 <div class="hero" id="h-hero"><div class="hx g"><span>تحصيل الشهر</span><b class="num" id="hx-g">0</b></div><div class="hx x"><span>مصاريف الشهر</span><b class="num" id="hx-x">0</b></div><div class="hx n"><span>صافي ربحك</span><b class="num" id="hx-n">0</b></div><div class="hx d"><span>فلوس على المرضى</span><b class="num" id="hx-d">0</b></div><button class="btn s" type="button" id="hx-go">تفاصيل التحصيل</button></div>

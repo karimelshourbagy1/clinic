@@ -639,6 +639,34 @@ body{background:transparent}
 @media(max-width:860px){.lx-me{display:none}}
 .lx-on{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 6px #4ADE80;margin-inline-end:5px;vertical-align:middle}
 .lx-me img{width:52px;height:52px}
+
+/* clinical tools tab */
+.ct-hero{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:24px 26px;border-radius:20px;margin-bottom:16px;color:#F3EEE4;
+  background:radial-gradient(80% 140% at 0% 0%,rgba(217,182,111,.25),transparent 60%),linear-gradient(135deg,#0C0C0D,#231D14);border:1px solid rgba(217,182,111,.35);box-shadow:0 16px 36px rgba(0,0,0,.22)}
+.ct-hero h1{font-size:1.7rem;margin:2px 0;background:linear-gradient(90deg,#F7E7C0,#D9B66F);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ct-hero p{margin:0;opacity:.75;font-size:.92rem}.ct-k{letter-spacing:.3em;font-size:.7rem;color:#D9B66F;font-weight:700}
+.ct-pat{font-size:.9rem;color:#F3EEE4}
+.ct-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.ct-g{background:var(--glass,var(--surface));border:1px solid var(--line);border-radius:16px;padding:12px}
+.ct-g h3{font-size:.8rem;letter-spacing:.12em;color:var(--gold);margin:0 0 8px}
+.ct-g .chips{display:flex;flex-wrap:wrap;gap:6px}
+.ct-g button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-size:.84rem;cursor:pointer}
+.ct-g button[aria-pressed="true"]{background:linear-gradient(135deg,#F0D79C,#B8924A);color:#1a1409;border-color:#B8924A;font-weight:600}
+.ct-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}
+.ct-f{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px}.lz-row input{border:1px solid var(--line);background:var(--sunk)}
+.ct-f label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:3px}
+.ct-f .u{font-size:.7rem;opacity:.7}
+.ct-sec{grid-column:1/-1;font-weight:600;font-size:.86rem;color:var(--gold);border-bottom:1px solid var(--line2);padding-bottom:4px;margin-top:6px}
+.ct-res{background:linear-gradient(160deg,#0E0D0B,#241E15);color:#F3EEE4;border:1px solid rgba(217,182,111,.35);border-radius:18px;padding:18px;box-shadow:0 14px 30px rgba(0,0,0,.2)}
+.ct-big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.ct-big b{font-family:var(--f-display);font-size:2.4rem;color:#F0D79C;line-height:1.1}.ct-big span{font-size:1rem;opacity:.85}
+.ct-res ul{margin:10px 0 0;padding-inline-start:18px}.ct-res li{margin:3px 0}
+.ct-flag{display:inline-block;margin:3px 0 0 6px;padding:3px 10px;border-radius:99px;font-size:.78rem;background:rgba(255,155,138,.15);color:#FFB4A6;border:1px solid rgba(255,155,138,.35)}
+.ct-ok{background:rgba(94,224,165,.12);color:#8FF0C2;border-color:rgba(94,224,165,.35)}
+.ct-src{margin-top:10px;font-size:.74rem;opacity:.6}
+.ct-hist{margin-top:14px}.ct-hist table{width:100%;border-collapse:collapse;font-size:.8rem}
+.ct-hist th,.ct-hist td{padding:6px 8px;border-bottom:1px solid var(--line2);text-align:center;white-space:nowrap}.ct-hist th{color:var(--muted);font-weight:500}
+.ct-hist .lo{color:var(--red)}.ct-hist td:nth-child(2){white-space:normal;min-width:200px;text-align:start}.ct-f input,.ct-f select{border:1px solid var(--line);background:var(--sunk);border-radius:10px}.ct-big b.sm{font-size:1.45rem}.ct-tw{overflow-x:auto}
+@media(max-width:860px){.ct-groups,.ct-grid{grid-template-columns:1fr}}
 </style>
 
 <div class="app">
@@ -654,6 +682,7 @@ body{background:transparent}
       <button role="tab" id="t-price" aria-controls="v-price" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg><span>الأسعار</span></button>
       <button role="tab" id="t-stock" aria-controls="v-stock" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg><span>المخزون</span></button>
       <button role="tab" id="t-laser" aria-controls="v-laser" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span>Laser</span></button>
+      <button role="tab" id="t-tools" aria-controls="v-tools" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/></svg><span>أدوات طبية</span></button>
       <button role="tab" id="t-pharm" aria-controls="v-pharm" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M9.2 7.9l5.6 8.2"/></svg><span>الصيدلية</span></button>
       <button role="tab" id="t-money" aria-controls="v-money" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>الفلوس والتقارير</span></button>
       <button role="tab" id="t-set" aria-controls="v-set" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>الإعدادات</span></button>
@@ -1010,6 +1039,13 @@ body{background:transparent}
     <div class="lz-out" id="lz-out"></div>
   </div>
 </section>
+<section id="v-tools" role="tabpanel" aria-labelledby="t-tools" hidden>
+  <div class="ct-hero"><div><div class="ct-k">CLINICAL TOOLS</div><h1>الأدوات الطبية</h1><p>مقاييس وحاسبات الجلدية والذكورة والتجميل، وتتحفظ في ملف المريض عشان تتابع التطور</p></div><div class="ct-pat" id="ct-pat"></div></div>
+  <div class="lz-card" style="margin-bottom:14px"><div class="lz-h"><span>1</span>المريض <small>(اختياري، عشان تحفظ النتيجة وتشوف اللي قبلها)</small></div>
+    <div class="lz-row"><input id="ct-q" placeholder="دوّر بالاسم أو التليفون أو رقم الملف…" autocomplete="off"><button class="btn s ghost" type="button" id="ct-clear" hidden>شيل</button></div><div id="ct-res" class="lz-res"></div></div>
+  <div class="ct-groups" id="ct-tabs"></div>
+  <div class="ct-grid"><div class="lz-card" id="ct-form"></div><div id="ct-out"></div></div>
+</section>
 <section id="v-pharm" role="tabpanel" aria-labelledby="t-pharm" hidden>
   <div class="spread" style="margin-bottom:6px"><h1 style="font-size:1.35rem">الصيدلية</h1><span class="m" id="ph-meta"></span></div>
   <div class="sub" role="tablist"><button type="button" aria-selected="true" data-p="ph-p1">دليل العلاج</button><button type="button" aria-selected="false" data-p="ph-p2">كل المنتجات والأسعار</button><button type="button" aria-selected="false" data-p="ph-p3">حالات وأسئلة</button></div>
@@ -1338,9 +1374,9 @@ function clinicOptions(sel,all){
 }
 
 /* ---------------- nav ---------------- */
-var TABS=["t-home","t-book","t-appts","t-cases","t-price","t-stock","t-laser","t-pharm","t-money","t-set"];
+var TABS=["t-home","t-book","t-appts","t-cases","t-price","t-stock","t-laser","t-tools","t-pharm","t-money","t-set"];
 function showView(id){
-  ["v-home","v-book","v-appts","v-cases","v-price","v-stock","v-laser","v-pharm","v-money","v-set","v-sheet"].forEach(function(v){$(v).hidden=(v!==id);});
+  ["v-home","v-book","v-appts","v-cases","v-price","v-stock","v-laser","v-tools","v-pharm","v-money","v-set","v-sheet"].forEach(function(v){$(v).hidden=(v!==id);});
   TABS.forEach(function(t){$(t).setAttribute("aria-selected",String($(t).getAttribute("aria-controls")===id));});
   document.body.classList.toggle("in-sheet",id==="v-sheet");
   window.scrollTo(0,0);
@@ -4084,6 +4120,99 @@ $("lz-q").addEventListener("input",function(){var q=norm($("lz-q").value);if(q.l
   $("lz-res").innerHTML=l.map(function(p){return '<button type="button" data-id="'+esc(p.id)+'"><b>'+esc(p.name||"")+'</b> <span class="m">'+esc([p.fileNo,p.phone,p.fitz?"Fitz "+p.fitz:""].filter(Boolean).join(" · "))+'</span></button>';}).join("")||'<div class="m">مفيش نتيجة</div>';
   qa("[data-id]",$("lz-res")).forEach(function(b){b.addEventListener("click",function(){lzPick(patById(b.getAttribute("data-id")));});});});
 $("t-laser").addEventListener("click",function(){setTimeout(lzRender,0);});
+
+/* ===== Clinical tools tab ===== */
+var CT={k:"semen",pid:null,v:{}};
+var CT_Q5=[["Q1","ثقته إنه يحصل انتصاب ويكمّل"],["Q2","الانتصاب كافي للإيلاج"],["Q3","يحافظ عليه بعد الإيلاج"],["Q4","يحافظ عليه لحد النهاية"],["Q5","العلاقة مُرضية"]];
+var CT_DEF={
+ semen:{g:"andro",t:"تحليل السائل المنوي",f:[["vol","Volume","mL"],["conc","Concentration","M/mL"],["total","Total count","M (فاضي = يتحسب)"],["tm","Total motility","%"],["pr","Progressive","%"],["vit","Vitality","%"],["morph","Normal forms","%"],["dfi","DNA fragmentation","%"]],
+  c:function(v){var L={vol:1.4,conc:16,total:39,tm:42,pr:30,vit:54,morph:4},tot=v.total!==""&&v.total!=null?+v.total:(v.vol!==""&&v.conc!==""?+v.vol*+v.conc:null),t=[],fl=[];
+   if(v.conc!==""&&+v.conc===0)t.push("Azoospermia");else{
+   if(v.conc!==""&&+v.conc<L.conc||tot!=null&&tot<L.total)t.push("Oligozoospermia");
+   if(v.pr!==""&&+v.pr<L.pr)t.push("Asthenozoospermia");
+   if(v.morph!==""&&+v.morph<L.morph)t.push("Teratozoospermia");
+   if(v.vit!==""&&+v.vit<L.vit)t.push("Necrozoospermia (low vitality)");}
+   if(v.vol!==""&&+v.vol<L.vol)t.push("Hypospermia (low volume)");
+   var NM={vol:"Volume",conc:"Conc.",total:"Total",tm:"Total motility",pr:"Progressive",vit:"Vitality",morph:"Morphology"};Object.keys(L).forEach(function(k){var x=k==="total"?(tot==null?null:Math.round(tot*10)/10):(v[k]===""?null:+v[k]);if(x!=null&&x<L[k])fl.push(NM[k]+" "+x+" < "+L[k]);});
+   var lines=[];if(tot!=null)lines.push("Total sperm count: "+(Math.round(tot*10)/10)+" M");
+   if(t.indexOf("Azoospermia")>-1)lines.push("لازم تتأكد بعينة تانية بعد الطرد المركزي (centrifuged pellet) قبل الحكم.");
+   if(v.dfi!==""&&+v.dfi>30)lines.push("DFI أعلى من 30% (حد شائع في الأبحاث، مش من WHO).");
+   return {big:t.length?t.join(" + "):"Normozoospermia",sub:"",flags:fl,ok:!fl.length,lines:lines,src:"الحدود: WHO Laboratory Manual 6th ed. (2021)، الـ 5th centile. دي حدود مرجعية مش حد قاطع للخصوبة."};}},
+ horm:{g:"andro",t:"الهرمونات",f:[["tt","Total T","ng/dL"],["ft","Free T","pg/mL"],["fsh","FSH","mIU/mL"],["lh","LH","mIU/mL"],["prl","Prolactin","ng/mL"],["e2","Estradiol","pg/mL"]],
+  c:function(v){var fl=[],lines=[],r=null;
+   if(v.tt!==""&&v.e2!==""&&+v.e2>0){r=+v.tt/+v.e2;lines.push("T/E2 ratio = "+r.toFixed(1)+(r<10?" (أقل من 10)":""));if(r<10)fl.push("T/E2 < 10");}
+   if(v.tt!==""&&+v.tt<300){fl.push("Total T < 300 ng/dL");}
+   lines.push("باقي الحدود بتختلف من معمل لمعمل، فاتابع الأرقام في الجدول تحت.");
+   return {big:v.tt!==""?(+v.tt)+" ng/dL":"—",sub:"Total testosterone",flags:fl,ok:!fl.length,lines:lines,src:"300 ng/dL: حد AUA 2018. T/E2 < 10 (ng/dL ÷ pg/mL): حد مستخدم في أبحاث العقم."};}},
+ testis:{g:"andro",t:"حجم الخصية",f:[["s1","يمين",""],["rl","طول","cm"],["rw","عرض","cm"],["rh","سُمك","cm"],["s2","شمال",""],["ll","طول","cm"],["lw","عرض","cm"],["lh","سُمك","cm"]],
+  c:function(v){var R=(+v.rl||0)*(+v.rw||0)*(+v.rh||0)*0.71,Lf=(+v.ll||0)*(+v.lw||0)*(+v.lh||0)*0.71,fl=[],lines=[];
+   lines.push("يمين: "+R.toFixed(1)+" mL · شمال: "+Lf.toFixed(1)+" mL");
+   if(R&&Lf){var d=Math.abs(R-Lf)/Math.max(R,Lf)*100;lines.push("الفرق: "+d.toFixed(0)+"% ("+Math.abs(R-Lf).toFixed(1)+" mL)");if(d>20)fl.push("فرق أكتر من 20%");}
+   return {big:(R+Lf).toFixed(1)+" mL",sub:"الحجم الكلي",flags:fl,ok:!fl.length,lines:lines,src:"معادلة Lambert: الطول × العرض × السُمك × 0.71. فرق أكتر من 20% معيار شائع في متابعة دوالي المراهقين."};}},
+ iief:{g:"andro",t:"IIEF-5",f:CT_Q5.map(function(q){return [q[0].toLowerCase(),q[0],q[1],"sel5"];}),
+  c:function(v){var sc=0,n=0;["q1","q2","q3","q4","q5"].forEach(function(k){if(v[k]){sc+=+v[k];n++;}});
+   var b=sc>=22?"No ED":sc>=17?"Mild ED":sc>=12?"Mild to moderate ED":sc>=8?"Moderate ED":"Severe ED";
+   return {big:sc+" / 25",sub:n<5?"كمّل الـ 5 أسئلة":b,flags:n===5&&sc<22?[b]:[],ok:n===5&&sc>=22,lines:[],src:"IIEF-5 (SHIM)، Rosen 1999: 22–25 طبيعي، 17–21 بسيط، 12–16 بسيط لمتوسط، 8–11 متوسط، 5–7 شديد."};}},
+ iso:{g:"derm",t:"Isotretinoin التراكمي",f:[["wt","الوزن","kg"],["mg","الجرعة اليومية","mg"],["start","بدأ من",""," date"],["days","أو عدد الأيام","يوم"],["prev","جرعات سابقة","mg (اختياري)"]],
+  c:function(v){var days=+v.days||0;if(!days&&v.start){days=Math.max(0,Math.round((Date.now()-new Date(v.start).getTime())/864e5));}
+   var wt=+v.wt||0,mg=+v.mg||0,cum=mg*days+(+v.prev||0),pk=wt?cum/wt:0,lines=[],fl=[];
+   lines.push("التراكمي: "+Math.round(cum)+" mg خلال "+days+" يوم"+(mg&&wt?" ("+(mg/wt).toFixed(2)+" mg/kg/يوم)":""));
+   if(wt&&mg){[120,150].forEach(function(t){var left=Math.max(0,t*wt-cum);lines.push("لحد "+t+" mg/kg: فاضل "+Math.ceil(left/mg)+" يوم بالجرعة دي");});}
+   return {big:wt?pk.toFixed(0)+" mg/kg":"—",sub:wt?Math.min(100,Math.round(pk/120*100))+"% من 120 mg/kg":"اكتب الوزن",flags:fl,ok:pk>=120,lines:lines,src:"هدف 120–150 mg/kg هدف شائع في المراجع، مش قاعدة إلزامية. الحسبة بتفترض إن الجرعة ثابتة من البداية."};}},
+ pasi:{g:"derm",t:"PASI",f:(function(){var o=[];[["h","الراس والرقبة"],["u","الدراعات"],["t","الجذع"],["l","الرجلين"]].forEach(function(r){o.push(["s"+r[0],r[1],""]);o.push([r[0]+"a","المساحة","0–6","sel6"]);o.push([r[0]+"e","احمرار","0–4","sel4"]);o.push([r[0]+"i","سُمك","0–4","sel4"]);o.push([r[0]+"s","قشور","0–4","sel4"]);});return o;})(),
+  c:function(v){var W={h:.1,u:.2,t:.3,l:.4},sc=0;Object.keys(W).forEach(function(r){sc+=W[r]*(+v[r+"a"]||0)*((+v[r+"e"]||0)+(+v[r+"i"]||0)+(+v[r+"s"]||0));});
+   return {big:sc.toFixed(1),sub:sc>=10?"Moderate to severe (≥10)":"Mild (<10)",flags:sc>=10?["PASI ≥ 10"]:[],ok:sc<10,lines:["المساحة: 0 = 0%، 1 = أقل من 10%، 2 = 10–29%، 3 = 30–49%، 4 = 50–69%، 5 = 70–89%، 6 = 90–100%"],src:"PASI (0–72). قاعدة العشرات: PASI ≥ 10 = متوسط لشديد."};}},
+ salt:{g:"derm",t:"SALT",f:[["v","الفروة من فوق","% وقوع"],["r","الجنب اليمين","% وقوع"],["l","الجنب الشمال","% وقوع"],["p","من ورا","% وقوع"]],
+  c:function(v){var sc=.4*(+v.v||0)+.18*(+v.r||0)+.18*(+v.l||0)+.24*(+v.p||0),S=sc===0?"S0":sc<25?"S1":sc<50?"S2":sc<75?"S3":sc<100?"S4":"S5";
+   return {big:sc.toFixed(0)+"%",sub:S+(sc>=50?" · شديد (SALT ≥ 50)":""),flags:sc>=50?["SALT ≥ 50"]:[],ok:sc<50,lines:["اكتب نسبة الوقوع في كل جزء من 0 لـ 100"],src:"SALT: فوق 40% + يمين 18% + شمال 18% + ورا 24%."};}},
+ masi:{g:"derm",t:"mMASI",f:(function(){var o=[];[["f","الجبهة"],["mr","الخد اليمين"],["ml","الخد الشمال"],["c","الدقن"]].forEach(function(r){o.push(["s"+r[0],r[1],""]);o.push([r[0]+"a","المساحة","0–6","sel6"]);o.push([r[0]+"d","الغمقان","0–4","sel4"]);});return o;})(),
+  c:function(v){var W={f:.3,mr:.3,ml:.3,c:.1},sc=0;Object.keys(W).forEach(function(r){sc+=W[r]*(+v[r+"a"]||0)*(+v[r+"d"]||0);});
+   return {big:sc.toFixed(1)+" / 24",sub:"modified MASI",flags:[],ok:true,lines:["قارنه بالقراية اللي قبلها في الجدول تحت عشان تشوف التحسن"],src:"mMASI (Pandya 2011): 0.3 جبهة + 0.3 كل خد + 0.1 دقن، المساحة × الغمقان."};}},
+ botox:{g:"aes",t:"تخفيف البوتوكس",f:[["vial","الفيال","وحدة"],["sal","المحلول","mL"],["want","الوحدات المطلوبة","وحدة"]],
+  c:function(v){var u=+v.vial||0,m=+v.sal||0,lines=[];if(!u||!m)return {big:"—",sub:"اكتب الفيال والمحلول",flags:[],ok:true,lines:[],src:""};
+   var per=u/m;lines.push("كل 0.1 mL = "+(per/10).toFixed(1)+" وحدة");lines.push("كل شَرطة في سرنجة إنسولين 100 = "+(per/100).toFixed(2)+" وحدة");
+   if(+v.want){var ml=+v.want/per;lines.push(v.want+" وحدة = "+ml.toFixed(2)+" mL = "+Math.round(ml*100)+" شَرطة إنسولين");}
+   return {big:per.toFixed(0)+" U/mL",sub:"التركيز",flags:[],ok:true,lines:lines,src:"حسبة رياضية بس. الجرعات والمواضع قرارك."};}}
+};
+var CT_G={andro:"ذكورة وعقم",derm:"جلدية",aes:"تجميل"};
+function ctPat(){return CT.pid?patById(CT.pid):null;}
+function ctVals(){var v={};CT_DEF[CT.k].f.forEach(function(f){var e=$("ct-"+f[0]);if(e)v[f[0]]=e.value;});return v;}
+function ctRender(){var d=CT_DEF[CT.k],p=ctPat();
+  $("ct-pat").innerHTML=p?'👤 <b>'+esc(p.name||"")+'</b>'+(p.fileNo?' · '+esc(p.fileNo):''):'';
+  $("ct-tabs").innerHTML=Object.keys(CT_G).map(function(g){return '<div class="ct-g"><h3>'+CT_G[g]+'</h3><div class="chips">'+Object.keys(CT_DEF).filter(function(k){return CT_DEF[k].g===g;}).map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(CT.k===k)+'">'+esc(CT_DEF[k].t)+'</button>';}).join("")+'</div></div>';}).join("");
+  var opt=function(n,val){var o='<option value=""></option>';for(var i=(n===5?1:0);i<=n;i++)o+='<option'+(String(val)===String(i)?' selected':'')+'>'+i+'</option>';return o;};
+  $("ct-form").innerHTML='<div class="lz-h"><span>2</span>'+esc(d.t)+'</div><div class="ct-f">'+d.f.map(function(f){var val=CT.v[f[0]]!=null?CT.v[f[0]]:"";
+    if(f[2]===""&&!f[3])return '<div class="ct-sec">'+esc(f[1])+'</div>';
+    var inp=f[3]==="sel5"?'<select id="ct-'+f[0]+'">'+opt(5,val)+'</select>':f[3]==="sel6"?'<select id="ct-'+f[0]+'">'+opt(6,val)+'</select>':f[3]==="sel4"?'<select id="ct-'+f[0]+'">'+opt(4,val)+'</select>':f[3]===" date"?'<input id="ct-'+f[0]+'" type="date" value="'+esc(val)+'">':'<input id="ct-'+f[0]+'" type="number" step="any" inputmode="decimal" value="'+esc(val)+'">';
+    return '<div'+(f[3]==="sel5"?' style="grid-column:1/-1"':'')+'><label for="ct-'+f[0]+'">'+esc(f[1])+(f[3]==="sel5"?' · '+esc(f[2])+' <span class="u">(1 = تقريباً مفيش، 5 = دايماً)</span>':' <span class="u">'+esc(f[2])+'</span>')+'</label>'+inp+'</div>';}).join("")+'</div>'+
+    '<div class="row" style="margin-top:12px"><button class="btn gold" type="button" id="ct-save"'+(p?'':' disabled')+'>احفظ في ملف المريض</button><button class="btn ghost" type="button" id="ct-reset">امسح</button>'+(p?'':'<span class="m">اختار مريض عشان تحفظ</span>')+'</div>';
+  ctOut();}
+function ctOut(){var d=CT_DEF[CT.k],v=ctVals(),r=d.c(v),p=ctPat();
+  var h='<div class="ct-res"><div class="ct-k" style="margin-bottom:6px">'+esc(d.t)+'</div><div class="ct-big"><b class="num'+(String(r.big).length>18?' sm':'')+'">'+esc(r.big)+'</b><span>'+esc(r.sub||"")+'</span></div>'+
+    '<div>'+(r.flags.length?r.flags.map(function(x){return '<span class="ct-flag">'+esc(x)+'</span>';}).join(""):'')+'</div>'+
+    (r.lines.length?'<ul>'+r.lines.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'')+(r.src?'<div class="ct-src">'+esc(r.src)+'</div>':'')+'</div>';
+  if(p){var hs=(p.scores||[]).filter(function(x){return x.k===CT.k;}).sort(function(a,b){return a.d>b.d?-1:1;});
+    var cols=d.f.filter(function(f){return !(f[2]===""&&!f[3]);});
+    h+='<div class="lz-card ct-hist"><div class="lz-h"><span>↺</span>القراءات اللي فاتت <small>('+hs.length+')</small></div>'+(hs.length?'<div class="ct-tw"><table><thead><tr><th>التاريخ</th><th>النتيجة</th>'+cols.map(function(f){return '<th>'+esc(f[1])+'</th>';}).join("")+'<th></th></tr></thead><tbody>'+
+      hs.map(function(x){return '<tr><td>'+esc(fmtD(x.d))+'</td><td><b>'+esc(x.r)+'</b></td>'+cols.map(function(f){return '<td>'+esc(x.v[f[0]]||"")+'</td>';}).join("")+'<td><button class="btn s ghost" type="button" data-del="'+esc(x.id)+'" aria-label="امسح">✕</button></td></tr>';}).join("")+'</tbody></table></div>':'<div class="m">لسه مفيش قراءات محفوظة للمريض ده.</div>')+'</div>';}
+  $("ct-out").innerHTML=h;
+  qa("[data-del]",$("ct-out")).forEach(function(b){b.addEventListener("click",function(){var p=ctPat();if(!p||!confirm("تمسح القراءة دي؟"))return;p.scores=(p.scores||[]).filter(function(x){return x.id!==b.getAttribute("data-del");});ctSaveP(p);ctOut();});});}
+function ctSaveP(p){if(typeof SH!=="undefined"&&SH&&SH.p&&SH.p.id===p.id)SH.p.scores=p.scores;savePatient(p);}
+function ctPick(p){CT.pid=p?p.id:null;$("ct-q").value="";$("ct-res").innerHTML="";$("ct-clear").hidden=!p;
+  if(p&&CT.k==="iso"&&!CT.v.wt){var w=(vsorted(p)[0]||{}).wt;if(w)CT.v.wt=w;}ctRender();}
+$("ct-tabs").addEventListener("click",function(e){var b=e.target.closest("[data-k]");if(!b)return;CT.k=b.getAttribute("data-k");CT.v={};var p=ctPat();if(p&&CT.k==="iso"){var w=(vsorted(p)[0]||{}).wt;if(w)CT.v.wt=w;}ctRender();});
+$("ct-form").addEventListener("input",function(e){if(e.target.id&&e.target.id.indexOf("ct-")===0&&e.target.id!=="ct-q"){CT.v=ctVals();ctOut();}});
+$("ct-form").addEventListener("change",function(){CT.v=ctVals();ctOut();});
+$("ct-form").addEventListener("click",function(e){var t=e.target;
+  if(t.id==="ct-reset"){CT.v={};ctRender();}
+  if(t.id==="ct-save"){var p=ctPat();if(!p)return;var v=ctVals(),r=CT_DEF[CT.k].c(v);if(!Object.keys(v).some(function(k){return v[k]!=="";})){toast("اكتب القيم الأول",true);return;}
+    p.scores=(p.scores||[]).concat([{id:"sc"+Date.now().toString(36),k:CT.k,d:isoOf(new Date()),v:v,r:r.big+(r.sub&&CT.k!=="botox"?" · "+r.sub:"")}]);ctSaveP(p);toast("اتحفظت في ملف "+((p.name||"").split(" ")[0])+" ✓");ctOut();}});
+$("ct-clear").addEventListener("click",function(){ctPick(null);});
+$("ct-q").addEventListener("input",function(){var q=norm($("ct-q").value);if(q.length<2){$("ct-res").innerHTML="";return;}
+  var l=PAT.filter(function(p){return norm(p.name).indexOf(q)>-1||norm(p.nameEn).indexOf(q)>-1||norm(p.phone).indexOf(q)>-1||norm(p.fileNo).indexOf(q)>-1;}).slice(0,5);
+  $("ct-res").innerHTML=l.map(function(p){return '<button type="button" data-id="'+esc(p.id)+'"><b>'+esc(p.name||"")+'</b> <span class="m">'+esc([p.fileNo,p.phone].filter(Boolean).join(" · "))+'</span></button>';}).join("")||'<div class="m">مفيش نتايج</div>';
+  qa("[data-id]",$("ct-res")).forEach(function(b){b.addEventListener("click",function(){ctPick(patById(b.getAttribute("data-id")));});});});
+$("t-tools").addEventListener("click",function(){setTimeout(ctRender,0);});
 function sesSet(k,val){var s=SH.v.ses||(SH.v.ses={});s[k]=val;touch();}
 $("ses-t").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var t=b.getAttribute("data-v"),s=SH.v.ses||{};
   if(s.type===t)return;SH.v.ses=Object.assign({},{type:t,zones:s.zones||[],note:s.note||"",no:s.no||""});

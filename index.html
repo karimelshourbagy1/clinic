@@ -524,6 +524,54 @@ dialog{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(10,20,40,.25)}
 .ag-out{white-space:pre-wrap;margin-top:10px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line2);font-size:.92rem;line-height:1.7}
 #ag-send.off{opacity:.5;pointer-events:none}
 @media(max-width:600px){.ag-h .seg{width:100%}.ag-h .seg button{flex:1}}
+
+/* ===== Laser studio ===== */
+.lz-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:22px 24px;border-radius:18px;margin-bottom:16px;color:#EAF6FF;
+  background:radial-gradient(120% 140% at 100% 0%,#1F6FD6 0%,#0B2F63 45%,#071A33 100%);box-shadow:0 10px 30px rgba(7,26,51,.25);position:relative;overflow:hidden}
+.lz-hero::after{content:"";position:absolute;inset:auto -40px -60px auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.35),transparent 70%)}
+.lz-hero h1{font-size:1.7rem;color:#fff;margin:2px 0}.lz-hero p{margin:0;opacity:.8;font-size:.92rem}.lz-k{letter-spacing:.3em;font-size:.72rem;color:#7FD8FF;font-weight:700}
+.lz-pat{position:relative;z-index:1;font-size:.9rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:8px 14px;border-radius:12px;min-height:20px}
+.lz-pat:empty{display:none}
+.lz-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:980px){.lz-grid{grid-template-columns:1fr}}
+.lz-in{display:grid;gap:12px}
+.lz-card{background:var(--surface);border:1px solid var(--line2);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.lz-h{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:600;margin-bottom:10px}
+.lz-h span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--teal-soft);color:var(--teal);font-size:.8rem}
+.lz-h small{font-weight:400;color:var(--muted);font-family:var(--f-body)}
+.lz-row{display:flex;gap:8px}.lz-row input{flex:1}
+.lz-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.lz-res{display:grid;gap:4px;margin-top:6px}.lz-res button{text-align:start;border:1px solid var(--line2);background:var(--sunk);border-radius:10px;padding:8px 10px;cursor:pointer}
+.lz-skins{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.lz-skins{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.lz-skin{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 6px;cursor:pointer;display:grid;justify-items:center;gap:4px;font-size:.82rem}
+.lz-skin i{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 -3px 6px rgba(0,0,0,.18)}
+.lz-skin small{color:var(--muted);font-size:.7rem}
+.lz-skin[aria-pressed=true],.lz-z[aria-pressed=true],.lz-o[aria-pressed=true]{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 18%,transparent)}
+.lz-zones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.lz-zones{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.lz-z{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 4px;cursor:pointer;font-size:.82rem;display:grid;gap:2px;justify-items:center}
+.lz-z b{font-size:1.15rem;line-height:1}
+.lz-opts{display:flex;flex-wrap:wrap;gap:8px}.lz-o{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;cursor:pointer;font-size:.86rem}
+.lz-o small{display:block;color:var(--muted);font-size:.7rem}
+.lz-out{position:sticky;top:12px;display:grid;gap:12px}
+.lz-scr{border-radius:22px;padding:18px;color:#E6F1FF;background:radial-gradient(circle at 50% 0%,#1E293B 0%,#0A0F18 100%);border:1px solid #2A3A52;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.lz-top{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #26354B;padding-bottom:10px;margin-bottom:14px;font-size:.8rem;color:#94A3B8}
+.lz-top b{color:#E6F1FF;font-size:.92rem}
+.lz-badge{display:inline-flex;background:#0F172A;border:1px solid #334155;border-radius:20px;padding:3px}
+.lz-badge span{padding:5px 14px;border-radius:16px;font-weight:700;font-size:.82rem;color:#64748B}
+.lz-badge .on-a{background:#00E5FF;color:#001018;box-shadow:0 0 12px #00E5FF}.lz-badge .on-y{background:#69F0AE;color:#00160A;box-shadow:0 0 12px #69F0AE}
+.lz-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.lz-gauge{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;align-content:center;background:rgba(15,23,42,.75);border:5px solid rgba(105,240,174,.18);border-top-color:#69F0AE;border-right-color:#69F0AE;box-shadow:inset 0 0 18px rgba(105,240,174,.12)}
+.lz-gauge.a{border-top-color:#00E5FF;border-right-color:#00E5FF;border-color:rgba(0,229,255,.18);border-top-color:#00E5FF;border-right-color:#00E5FF}
+.lz-gauge small{font-size:.62rem;letter-spacing:.12em;color:#94A3B8}.lz-gauge b{font-size:1.55rem;font-weight:800;color:#fff;line-height:1.1}.lz-gauge i{font-style:normal;font-size:.7rem;color:#69F0AE}
+.lz-adj{display:flex;gap:6px;margin-top:4px}.lz-adj button{flex:1;padding:9px 4px;border-radius:10px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit}
+.lz-up{background:rgba(0,229,255,.12);color:#00E5FF;border:1px solid #00E5FF}.lz-dn{background:rgba(255,82,82,.12);color:#FF6B6B;border:1px solid #FF6B6B}.lz-rs{background:#334155;color:#fff;border:0;flex:.5!important}
+.lz-notes{margin-top:12px;background:rgba(255,215,64,.07);border-inline-start:4px solid #FFD740;padding:10px 12px;border-radius:10px;font-size:.84rem;line-height:1.7}
+.lz-notes ul{margin:4px 0 0;padding-inline-start:18px}
+.lz-zl{font-size:.82rem;color:#7FD8FF;margin-bottom:2px}
+.lz-act{display:flex;flex-wrap:wrap;gap:8px}
+.lz-warn{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:10px 12px;font-size:.86rem}
 </style>
 
 <div class="app">
@@ -538,6 +586,7 @@ dialog{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(10,20,40,.25)}
       <button role="tab" id="t-cases" aria-controls="v-cases" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.6c2.6.2 4.6 1.9 5.3 5.4"/></svg><span>المرضى</span></button>
       <button role="tab" id="t-price" aria-controls="v-price" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg><span>الأسعار</span></button>
       <button role="tab" id="t-stock" aria-controls="v-stock" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg><span>المخزون</span></button>
+      <button role="tab" id="t-laser" aria-controls="v-laser" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span>Laser</span></button>
       <button role="tab" id="t-pharm" aria-controls="v-pharm" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M9.2 7.9l5.6 8.2"/></svg><span>الصيدلية</span></button>
       <button role="tab" id="t-money" aria-controls="v-money" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>الفلوس والتقارير</span></button>
       <button role="tab" id="t-set" aria-controls="v-set" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>الإعدادات</span></button>
@@ -878,6 +927,22 @@ dialog{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(10,20,40,.25)}
 </section>
 
 <!-- ========== PHARMACY ========== -->
+<section id="v-laser" role="tabpanel" aria-labelledby="t-laser" hidden>
+  <div class="lz-hero"><div><div class="lz-k">LASER STUDIO</div><h1>DEKA Motus PRO</h1><p>اختار الحالة، والسيستم يحسبلك الباراميترز بخوارزميتك</p></div><div class="lz-pat" id="lz-pat"></div></div>
+  <div class="lz-grid">
+    <div class="lz-in">
+      <div class="lz-card"><div class="lz-h"><span>1</span>المريض <small>(اختياري، بيملا الباقي لوحده)</small></div>
+        <div class="lz-row"><input id="lz-q" placeholder="دوّر بالاسم أو التليفون أو رقم الملف…" autocomplete="off"><button class="btn s ghost" type="button" id="lz-clear" hidden>شيل</button></div><div id="lz-res" class="lz-res"></div>
+        <div class="lz-row2"><div><label class="f" for="lz-age">السن</label><input id="lz-age" type="number" min="1" max="99" inputmode="numeric" placeholder="مثلاً 28"></div>
+          <div><label class="f" for="lz-no">رقم الجلسة</label><input id="lz-no" type="number" min="1" inputmode="numeric" placeholder="1"></div></div></div>
+      <div class="lz-card"><div class="lz-h"><span>2</span>لون الجلد</div><div class="lz-skins" id="lz-skin"></div></div>
+      <div class="lz-card"><div class="lz-h"><span>3</span>المناطق <small>(تقدر تختار أكتر من منطقة)</small></div><div class="lz-zones" id="lz-zone"></div></div>
+      <div class="lz-card"><div class="lz-h"><span>4</span>سُمك الشعرة</div><div class="lz-opts" id="lz-hair"></div>
+        <div class="lz-h" style="margin-top:14px"><span>5</span>مقاس العدسة</div><div class="lz-opts" id="lz-spot"></div></div>
+    </div>
+    <div class="lz-out" id="lz-out"></div>
+  </div>
+</section>
 <section id="v-pharm" role="tabpanel" aria-labelledby="t-pharm" hidden>
   <div class="spread" style="margin-bottom:6px"><h1 style="font-size:1.35rem">الصيدلية</h1><span class="m" id="ph-meta"></span></div>
   <div class="sub" role="tablist"><button type="button" aria-selected="true" data-p="ph-p1">دليل العلاج</button><button type="button" aria-selected="false" data-p="ph-p2">كل المنتجات والأسعار</button><button type="button" aria-selected="false" data-p="ph-p3">حالات وأسئلة</button></div>
@@ -1206,9 +1271,9 @@ function clinicOptions(sel,all){
 }
 
 /* ---------------- nav ---------------- */
-var TABS=["t-home","t-book","t-appts","t-cases","t-price","t-stock","t-pharm","t-money","t-set"];
+var TABS=["t-home","t-book","t-appts","t-cases","t-price","t-stock","t-laser","t-pharm","t-money","t-set"];
 function showView(id){
-  ["v-home","v-book","v-appts","v-cases","v-price","v-stock","v-pharm","v-money","v-set","v-sheet"].forEach(function(v){$(v).hidden=(v!==id);});
+  ["v-home","v-book","v-appts","v-cases","v-price","v-stock","v-laser","v-pharm","v-money","v-set","v-sheet"].forEach(function(v){$(v).hidden=(v!==id);});
   TABS.forEach(function(t){$(t).setAttribute("aria-selected",String($(t).getAttribute("aria-controls")===id));});
   document.body.classList.toggle("in-sheet",id==="v-sheet");
   window.scrollTo(0,0);
@@ -2522,7 +2587,7 @@ var CARE={
  peel:["بعد التقشير","• شد أو تقشير خفيف من 3 لـ 7 أيام طبيعي — سيبه يقع لوحده ومتشدّهوش.\n• مرطب لطيف وصن بلوك SPF 50 كل يوم.\n• وقّف الريتينول والسكراب والأحماض أسبوع.\n• بلاش شمس مباشرة أو ساونا أسبوع."],
  skin:["بعد جلسة البشرة","• بلاش مكياج 12 ساعة.\n• بلاش ريتينول أو أحماض 48 ساعة.\n• صن بلوك كل يوم."],
  prp:["بعد البلازما / حقن الشعر","• متغسلش المكان 24 ساعة.\n• بلاش مسكنات زي الأسبرين أو البروفين 3 أيام — لو احتجت مسكن خد باراسيتامول.\n• بلاش جيم أو ساونا 24 ساعة.\n• الجلسات بانتظام هي اللي بتفرق في النتيجة."],
- lhr:["بعد ليزر إزالة الشعر","• احمرار أو تورّم خفيف حوالين الشعرة طبيعي لساعات.\n• بلاش شمس أسبوعين، وصن بلوك على المكان المكشوف.\n• بين الجلسات حلاقة بس — ممنوع الشمع أو النتف أو الخيط.\n• بلاش دش سخن أو ساونا 24–48 ساعة.\n• الشعر بيقع لوحده من أسبوع لـ 3 أسابيع — الجلسة الجاية بعد 4–6 أسابيع."],
+ lhr:["بعد ليزر إزالة الشعر","• احمرار أو تورّم خفيف حوالين الشعرة طبيعي، وبيروح خلال ساعات لحد يوم.\n• كمادات باردة ملفوفة في فوطة أو جل بعد الليزر لو فيه إحساس سخونية.\n• بلاش شمس مباشرة أسبوعين، وصن بلوك SPF 50 على المكان المكشوف وجدّده كل 3 ساعات.\n• بلاش دش سخن أو ساونا أو جيم بعرق كتير 24–48 ساعة.\n• بلاش مزيل عرق أو برفان أو كريمات مقشّرة (ريتينول / أحماض) على المكان 48 ساعة.\n• بين الجلسات حلاقة أو ماكينة بس — ممنوع الشمع أو النتف أو الخيط أو كريمات إزالة الشعر.\n• الشعر بيقع لوحده من أسبوع لـ 3 أسابيع، متشدّهوش.\n• الجلسة الجاية بعد 4–6 أسابيع للجسم و4 أسابيع للوش.\n⚠️ كلّمنا فوراً لو ظهر فقاقيع أو قشور أو ألم بيزيد أو تغيّر في لون الجلد."],
  co2:["بعد الفراكشنال CO2","• احمرار وقشور من 5 لـ 7 أيام طبيعي — متشيلش القشور.\n• اغسل بمية وغسول لطيف واحط المرهم المكتوب لك.\n• ممنوع الشمس تماماً أسبوعين وصن بلوك بعد ما الجلد يلم.\n• مكياج بعد 7 أيام.\n⚠️ كلّمنا لو ظهر صديد أو ألم بيزيد أو حرارة."],
  photo:["جلسات الإكسيمر / الضوئي","• الانتظام في المواعيد هو أهم حاجة في النتيجة.\n• احمرار خفيف بعد الجلسة طبيعي.\n• صن بلوك على الجلد السليم وبلاش شمس زيادة يوم الجلسة."],
  hifu:["بعد الهايفو","• احمرار أو تنميل أو ألم خفيف عند اللمس طبيعي لأيام.\n• النتيجة بتظهر تدريجي على 2–3 شهور."],
@@ -2534,9 +2599,10 @@ var CARE={
 };
 var CARE_CAT={"بوتوكس":"botox","فيلر":"filler","سكين بوستر ونضارة":"boost","محفزات كولاجين":"boost","ميزوثيرابي":"boost","ديرمابن":"needle","تقشير":"peel","بشرة":"skin","شعر":"prp","جراحات جلدية":"surg","زوائد وسنط وكي":"cautery","حقن موضعي":"ilk"};
 var CARE_ID={l_lhr:"lhr",l_laser:"lhr",l_co2:"co2",l_co2s:"co2",l_excimer:"photo",l_nb:"photo",l_hifu:"hifu",sk_prp:"prp",a_ici:"ici",a_pshot:"prp",a_varico1:"varico",a_varico2:"varico",cs_sculptra:["boost","sculptra"],cs_olidia:["boost","sculptra"]};
-function careKeys(items){var ks=[];(items||[]).forEach(function(it){var ids=[];if(it.pk){var p=pack(it.pk);if(p)(p.items||[]).forEach(function(x){ids.push(x.s);});}else if(it.course){}else ids.push(it.sid);
+var SES_CARE={laser:"lhr",frac:"co2",peel:"peel",derma:"needle",skin:"skin",hair:"prp"};
+function careKeys(items,ses){var ks=[];if(ses&&SES_CARE[ses.type])ks.push(SES_CARE[ses.type]);(items||[]).forEach(function(it){var ids=[];if(it.pk){var p=pack(it.pk);if(p)(p.items||[]).forEach(function(x){ids.push(x.s);});}else if(it.course){}else ids.push(it.sid);
   ids.forEach(function(id){var s=svc(id);if(!s||s.k==="k")return;var k=CARE_ID[id]||CARE_CAT[s.c];if(!k)return;[].concat(k).forEach(function(x){if(ks.indexOf(x)<0)ks.push(x);});});});return ks;}
-function careText(p,items){var ks=careKeys(items);if(!ks.length)return "";
+function careText(p,items,ses){var ks=careKeys(items,ses);if(!ks.length)return "";
   return "أهلاً "+(p.name||"")+" 🌿\nدي تعليماتك بعد الجلسة من د. كريم الشوربجي:\n\n"+ks.map(function(k){return "*"+CARE[k][0]+"*\n"+CARE[k][1];}).join("\n\n")+"\n\nلو عندك أي سؤال ابعتلنا هنا في أي وقت.";}
 /* consent forms */
 var CONS={
@@ -2549,15 +2615,15 @@ var CONS={
 var CONS_CAT={"بوتوكس":"inj","فيلر":"inj","سكين بوستر ونضارة":"inj","محفزات كولاجين":"inj","ميزوثيرابي":"needle","ديرمابن":"needle","تقشير":"needle","بشرة":"needle","شعر":"needle","ليزر وأجهزة":"laser","جراحات جلدية":"surg","زوائد وسنط وكي":"surg","حقن موضعي":"surg","ذكورة":"andro"};
 function consKeys(items){var ks=[];(items||[]).forEach(function(it){var ids=it.pk&&pack(it.pk)?(pack(it.pk).items||[]).map(function(x){return x.s;}):[it.sid];
   ids.forEach(function(id){var s=svc(id);if(!s||s.k==="k")return;var k=CONS_CAT[s.c]||"gen";if(ks.indexOf(k)<0)ks.push(k);});});return ks;}
-function renderCare(){if(!SH)return;var p=SH.p,v=SH.v,txt=careText(p,v.items),need=consKeys(v.items),have=(v.cons||[]).map(function(c){return c.t;});
+function renderCare(){if(!SH)return;var p=SH.p,v=SH.v,txt=careText(p,v.items,v.ses),need=consKeys(v.items),have=(v.cons||[]).map(function(c){return c.t;});
   var l=txt?waLink(p.phone,txt):null,a=$("care-wa");a.hidden=!l;if(l)a.href=l;$("care-copy").hidden=!txt;
   var miss=need.filter(function(k){return have.indexOf(k)<0;});
-  $("care-sum").innerHTML=(need.length?(miss.length?'<span class="pill a">محتاج موافقة: '+miss.map(function(k){return esc(CONS[k][0].replace(/^موافقة على /,""));}).join("، ")+'</span>':'<span class="pill t">الموافقات موقّعة ✓</span>'):'<span class="m">الموافقة والتعليمات بتظهر لما تضيف إجراء.</span>')+(txt?' <span class="pill">تعليمات: '+careKeys(v.items).map(function(k){return esc(CARE[k][0].replace(/^بعد /,""));}).join("، ")+'</span>':'');
+  $("care-sum").innerHTML=(need.length?(miss.length?'<span class="pill a">محتاج موافقة: '+miss.map(function(k){return esc(CONS[k][0].replace(/^موافقة على /,""));}).join("، ")+'</span>':'<span class="pill t">الموافقات موقّعة ✓</span>'):'<span class="m">الموافقة والتعليمات بتظهر لما تضيف إجراء.</span>')+(txt?' <span class="pill">تعليمات: '+careKeys(v.items,v.ses).map(function(k){return esc(CARE[k][0].replace(/^بعد /,""));}).join("، ")+'</span>':'');
   $("cons-list").innerHTML=(v.cons||[]).map(function(c,i){return '<div class="it" style="cursor:default"><img alt="توقيع" src="'+esc(c.sig)+'" style="height:38px;background:#fff;border-radius:6px;padding:2px"><div class="main"><div class="t">'+esc((CONS[c.t]||CONS.gen)[0])+'</div><div class="m">'+esc(c.nm||"")+' · '+esc(new Date(c.at).toLocaleString((UILANG==="en"?"en-GB":"ar-EG"),{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}))+(c.ph?' · موافق على استخدام الصور':'')+'</div></div><button class="btn s" type="button" data-cimg="'+i+'">صورة</button><button class="btn s ghost" type="button" data-cx="'+i+'">✕</button></div>';}).join("");
   qa("[data-cx]",$("cons-list")).forEach(function(b){arm(b,function(){SH.v.cons=(SH.v.cons||[]).slice();SH.v.cons.splice(+b.getAttribute("data-cx"),1);touch();renderCare();},"امسح");});
   qa("[data-cimg]",$("cons-list")).forEach(function(b){b.addEventListener("click",function(){consImg(SH.v.cons[+b.getAttribute("data-cimg")]);});});
   $("cs-sign").textContent=miss.length?"✍️ توقيع الموافقة ("+miss.length+")":"✍️ موافقة مستنيرة";}
-$("care-copy").addEventListener("click",function(){var t=PT(careText(SH.p,SH.v.items),SH.p),b=$("care-copy");try{navigator.clipboard.writeText(t).then(function(){b.textContent="اتنسخت ✓";setTimeout(function(){b.textContent="انسخ التعليمات";},1500);},function(){toast("ماقدرتش أنسخ",true);});}catch(e){toast("ماقدرتش أنسخ",true);}});
+$("care-copy").addEventListener("click",function(){var t=PT(careText(SH.p,SH.v.items,SH.v.ses),SH.p),b=$("care-copy");try{navigator.clipboard.writeText(t).then(function(){b.textContent="اتنسخت ✓";setTimeout(function(){b.textContent="انسخ التعليمات";},1500);},function(){toast("ماقدرتش أنسخ",true);});}catch(e){toast("ماقدرتش أنسخ",true);}});
 $("cs-sign").addEventListener("click",function(){var need=consKeys(SH.v.items),have=(SH.v.cons||[]).map(function(c){return c.t;}),def=need.filter(function(k){return have.indexOf(k)<0;})[0]||need[0]||"gen";
   var p=SH.p,t=def;
   openDlg('<div class="dh"><div class="main"><h2>موافقة مستنيرة</h2><div class="m">خلّي المريض يقرا ويمضي بصباعه على الشاشة.</div></div><button class="btn s ghost" type="button" id="cn-x">✕</button></div><div class="db">'+
@@ -2688,37 +2754,83 @@ function wrapLines(x,text,maxW){var out=[];String(text).split("\n").forEach(func
 function loadImg(src){return new Promise(function(res){var i=new Image();i.onload=function(){res(i);};i.onerror=function(){res(null);};i.src=src;});}
 function rxLineEn(l){return l.split(/( — | - |: )/).map(function(part){var t=I18.msg(part);return AR_RE.test(t)?part:t;}).join("");}
 async function rxCanvas(light){
-  var p=SH.p,v=SH.v,W=1440,P=84,FB='"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif',FD='"Readex Pro","IBM Plex Sans Arabic",sans-serif';
+  var p=SH.p,v=SH.v,W=1500,P=110,FB='"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif',FD='"Readex Pro","IBM Plex Sans Arabic",sans-serif';
   try{await Promise.all([document.fonts.load('600 52px "Readex Pro"'),document.fonts.load('400 34px "IBM Plex Sans Arabic"'),document.fonts.load('600 34px "IBM Plex Sans Arabic"')]);}catch(e){}
-  var C=light?{bg:"#FFFFFF",ink:"#1B1A17",gold:"#8A6A28",mut:"#6B6458",line:"rgba(138,106,40,.45)"}:{bg:"#16191A",ink:"#EDE6D6",gold:"#D4B57A",mut:"#BFAE8A",line:"rgba(201,173,118,.45)"};
-  var cv=document.createElement("canvas"),x=cv.getContext("2d");
-  x.font="400 34px "+FB;
+  var C=light?{bg:"#FFFDF8",bg2:"#F7F1E4",ink:"#1E1B16",gold:"#9A7432",gold2:"#C9A45C",mut:"#6E6556",line:"rgba(154,116,50,.55)",soft:"rgba(154,116,50,.07)"}
+    :{bg:"#121516",bg2:"#1A1E1F",ink:"#EFE8D8",gold:"#D8B878",gold2:"#F0D59C",mut:"#BDAE8E",line:"rgba(216,184,120,.5)",soft:"rgba(216,184,120,.07)"};
+  var EN=patLang(p)==="en",cv=document.createElement("canvas"),x=cv.getContext("2d"),IW=W-2*P;
   var inv=(v.inv||[]).concat(v.invx?[v.invx]:[]);
-  var body=wrapLines(x,(v.plan||"").trim(),W-2*P);
-  var EN=patLang(p)==="en";if(EN)body=wrapLines(x,(v.plan||"").trim().split("\n").map(rxLineEn).join("\n"),W-2*P);
-  var invL=inv.length?wrapLines(x,(EN?"Requested: ":"مطلوب: ")+inv.join(" – "),W-2*P):[];
-  var LH=66,H=380+(v.ddx?60:0)+130+Math.max(body.length*LH,300)+(invL.length?invL.length*LH+30:0)+170;
-  cv.width=W;cv.height=H;x=cv.getContext("2d");
-  x.fillStyle=C.bg;x.fillRect(0,0,W,H);
-  var logo=await loadImg(LOGO_IMG);if(logo)x.drawImage(logo,W-P-128,64,128,150);
-  x.textAlign="right";x.direction="rtl";x.fillStyle=C.gold;x.font="600 54px "+FD;if(EN)x.direction="ltr";x.fillText(EN?"Dr. Karim Elshourbagy":"د. كريم الشوربجي",W-P-158,140);
-  x.direction="ltr";x.font="600 22px "+FD;x.fillStyle=C.mut;try{x.letterSpacing="5px";}catch(e){}x.fillText("DERMATOLOGY · VENEREOLOGY · ANDROLOGY",W-P-158,186);try{x.letterSpacing="0px";}catch(e){}
-  x.fillStyle=C.line;x.fillRect(P,250,W-2*P,2);
-  // patient row
-  var segs=(EN?["Name: "+(p.name||"—"),p.age?"Age: "+p.age:"","Date: "+fmtD(v.d||today()),p.fileNo?"File: "+p.fileNo:""]:["الاسم: "+(p.name||"—"),p.age?"السن: "+p.age:"","التاريخ: "+fmtD(v.d||today()),p.fileNo?"ملف: "+p.fileNo:""]).filter(Boolean);
-  x.font="400 32px "+FB;x.fillStyle=C.ink;x.direction=EN?"ltr":"rtl";var cx=EN?P:W-P,cy=318;if(EN)x.textAlign="left";
-  segs.forEach(function(s){var w=x.measureText(s).width;if(EN){if(cx+w>W-P){cx=P;cy+=50;}x.fillText(s,cx,cy);cx+=w+56;}else{if(cx-w<P){cx=W-P;cy+=50;}x.fillText(s,cx,cy);cx-=w+56;}});x.textAlign="right";
-  var y=cy+20;
-  if(v.ddx){y+=52;x.font="400 30px "+FB;x.fillStyle=C.mut;var ar=AR_RE.test(v.ddx);x.direction=ar?"rtl":"ltr";x.textAlign=ar?"right":"left";x.fillText((ar&&!EN?"التشخيص: ":"Dx: ")+v.ddx,ar?W-P:P,y);}
-  y+=110;x.textAlign="right";x.direction="ltr";x.font="600 84px "+FD;x.fillStyle=C.gold;if(EN)x.textAlign="left";x.fillText("Rx",EN?P:W-P,y);x.textAlign="right";
-  y+=30;x.font="400 34px "+FB;x.fillStyle=C.ink;
-  body.forEach(function(l){y+=LH;if(!l.t)return;x.direction=l.rtl?"rtl":"ltr";var lf=EN&&!l.rtl;x.textAlign=lf?"left":"right";x.fillText(l.t,lf?P:W-P,y);});
-  if(body.length*LH<300)y+=300-body.length*LH;
-  if(invL.length){y+=30;x.fillStyle=C.mut;invL.forEach(function(l){y+=LH;x.direction=l.rtl?"rtl":"ltr";var lf=EN&&!l.rtl;x.textAlign=lf?"left":"right";x.fillText(l.t,lf?P:W-P,y);});}
-  y+=56;x.fillStyle=C.line;x.fillRect(P,y,W-2*P,2);y+=60;
-  x.font="400 28px "+FB;x.fillStyle=C.mut;
-  if(v.next){x.direction=EN?"ltr":"rtl";x.textAlign="right";x.fillText((EN?"Follow-up: ":"المتابعة: ")+fmtD(v.next),W-P,y);}
-  x.direction="ltr";x.textAlign="left";x.fillText((SET.wa||"01145914430")+"  ·  @dr.karimelshourbagy",P,y);
+  var planTxt=(v.plan||"").trim();if(EN)planTxt=planTxt.split("\n").map(rxLineEn).join("\n");
+  var meds=planTxt?planTxt.split("\n").filter(function(l){return l.trim();}):[];
+  var cks=careKeys(v.items,v.ses),ses=v.ses&&v.ses.type?v.ses:null,sesName=ses?((SES_T.filter(function(t){return t[0]===ses.type;})[0]||[0,""])[1]):"";
+  var logo=await loadImg(LOGO_IMG);
+  function txt(t,X,Y,font,color,align,dir){x.font=font;x.fillStyle=color;x.textAlign=align;x.direction=dir;x.fillText(t,X,Y);}
+  function rr(X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath();}
+  function orn(Y){x.fillStyle=C.line;x.fillRect(P,Y,IW/2-24,2);x.fillRect(W/2+24,Y,IW/2-24,2);x.save();x.translate(W/2,Y+1);x.rotate(Math.PI/4);x.fillStyle=C.gold;x.fillRect(-7,-7,14,14);x.restore();}
+  function head(t,Y){var ar=AR_RE.test(t);txt(t,ar?W-P:P,Y,"600 34px "+FD,C.gold,ar?"right":"left",ar?"rtl":"ltr");x.fillStyle=C.line;x.fillRect(ar?W-P-140:P,Y+16,140,3);}
+  // ---- layout pass (draw=false measures, draw=true paints)
+  function layout(draw){
+    var y=0,LH=62;
+    // header
+    if(draw){
+      x.fillStyle=C.bg;x.fillRect(0,0,W,cv.height);
+      var g=x.createLinearGradient(0,0,0,380);g.addColorStop(0,C.bg2);g.addColorStop(1,C.bg);x.fillStyle=g;x.fillRect(0,0,W,380);
+      x.strokeStyle=C.line;x.lineWidth=3;rr(34,34,W-68,cv.height-68,26);x.stroke();x.lineWidth=1.2;rr(50,50,W-100,cv.height-100,20);x.stroke();
+      if(logo){x.save();x.globalAlpha=light?.045:.06;var lw=620,lh=lw*logo.height/logo.width;x.drawImage(logo,(W-lw)/2,(cv.height-lh)/2+80,lw,lh);x.restore();
+        x.drawImage(logo,W-P-118,92,118,138);}
+      txt(EN?"Dr. Karim Elshourbagy":"د. كريم الشوربجي",EN?P:W-P-146,162,"600 58px "+FD,C.gold,EN?"left":"right",EN?"ltr":"rtl");
+      try{x.letterSpacing="6px";}catch(e){}txt("DERMATOLOGY · VENEREOLOGY · ANDROLOGY",EN?P:W-P-146,210,"600 22px "+FD,C.mut,EN?"left":"right","ltr");try{x.letterSpacing="0px";}catch(e){}
+      txt(EN?"Skin · Hair · Aesthetics · Men's health":"جلدية · شعر · تجميل · ذكورة",EN?P:W-P-146,252,"400 26px "+FB,C.mut,EN?"left":"right",EN?"ltr":"rtl");
+      if(p.fileNo){txt("FILE",EN?W-P:P,150,"600 20px "+FD,C.mut,EN?"right":"left","ltr");txt(p.fileNo,EN?W-P:P,192,"600 32px "+FD,C.ink,EN?"right":"left","ltr");}
+    }
+    y=300;if(draw)orn(y);y+=40;
+    // patient panel
+    var segs=EN?[["Patient",p.name||"—"],["Age",p.age||"—"],["Date",fmtD(v.d||today())]]:[["المريض",p.name||"—"],["السن",p.age||"—"],["التاريخ",fmtD(v.d||today())]];
+    var ph=v.ddx?170:120;
+    if(draw){x.fillStyle=C.soft;rr(P,y,IW,ph,20);x.fill();x.strokeStyle=C.line;x.lineWidth=1;rr(P,y,IW,ph,20);x.stroke();
+      var cw=IW/3;segs.forEach(function(sg,i){var cx=EN?P+28+i*cw:W-P-28-i*cw;txt(sg[0],cx,y+44,"400 22px "+FB,C.mut,EN?"left":"right",EN?"ltr":"rtl");
+        var val=String(sg[1]),ar=AR_RE.test(val);x.font="600 32px "+FD;while(x.measureText(val).width>cw-40&&val.length>3)val=val.slice(0,-2)+"…";txt(val,cx,y+90,"600 32px "+FD,C.ink,EN?"left":"right",ar?"rtl":"ltr");});
+      if(v.ddx){var ar=AR_RE.test(v.ddx);txt((EN||!ar?"Dx: ":"التشخيص: ")+v.ddx,EN||!ar?P+28:W-P-28,y+144,"400 28px "+FB,C.gold,EN||!ar?"left":"right",ar?"rtl":"ltr");}}
+    y+=ph+110;
+    // Rx
+    if(draw)txt("℞",EN?P:W-P,y+20,"400 110px Georgia,serif",C.gold,EN?"left":"right","ltr");
+    y+=50;
+    x.font="400 34px "+FB;var n=0;
+    meds.forEach(function(m){var isHead=/:$/.test(m.trim())||/^#/.test(m.trim());var t=m.replace(/^[\-•*·\d\.\)\s]+/,"").replace(/^#\s*/,"");
+      var lines=wrapLines(x,t,IW-90);
+      if(isHead){y+=LH;if(draw){var ar=AR_RE.test(t);txt(t,ar?W-P:P,y,"600 32px "+FD,C.gold,ar?"right":"left",ar?"rtl":"ltr");}return;}
+      n++;y+=LH+8;
+      if(draw){var rtl=lines[0]&&lines[0].rtl;var bx=rtl&&!EN?W-P-22:P+22;x.fillStyle=C.gold;x.beginPath();x.arc(bx,y-11,22,0,7);x.fill();
+        txt(String(n),bx,y-1,"600 24px "+FD,light?"#FFFDF8":"#121516","center","ltr");}
+      lines.forEach(function(l,i){if(i)y+=LH-6;if(!draw)return;var lf=!l.rtl;txt(l.t,lf?P+64:W-P-64,y,"400 34px "+FB,C.ink,lf?"left":"right",l.rtl?"rtl":"ltr");});
+      if(draw){x.fillStyle=C.soft;x.fillRect(P+40,y+22,IW-80,2);}});
+    if(!meds.length)y+=40;
+    // investigations
+    if(inv.length){y+=80;if(draw)head(EN?"Investigations":"التحاليل والفحوصات المطلوبة",y);y+=24;x.font="400 32px "+FB;
+      inv.forEach(function(t){var ls=wrapLines(x,"◆  "+t,IW-40);ls.forEach(function(l){y+=56;if(draw)txt(l.t,l.rtl?W-P-10:P+10,y,"400 32px "+FB,C.ink,l.rtl?"right":"left",l.rtl?"rtl":"ltr");});});}
+    // session + aftercare
+    if(ses||cks.length){y+=86;if(draw)head(EN?"Today's session & aftercare":"جلسة النهارده وتعليمات ما بعدها",y);y+=30;
+      if(ses){y+=50;var sl=sesName+(ses.no?(" · الجلسة رقم "+ses.no):"")+((ses.zones||[]).length?(" · "+(ses.zones||[]).map(function(k){return ZN[k]||k;}).join("، ")):"");
+        x.font="600 30px "+FD;wrapLines(x,sl,IW-20).forEach(function(l,i){if(i)y+=48;if(draw)txt(l.t,W-P-10,y,"600 30px "+FD,C.ink,"right","rtl");});}
+      x.font="400 30px "+FB;
+      cks.forEach(function(k){y+=58;if(draw)txt(CARE[k][0],W-P-10,y,"600 30px "+FD,C.gold,"right","rtl");
+        CARE[k][1].split("\n").forEach(function(par){wrapLines(x,par,IW-40).forEach(function(l){y+=50;if(draw){var warn=/^⚠/.test(l.t);txt(l.t,W-P-24,y,(warn?"600 ":"400 ")+"29px "+FB,warn?(light?"#A23B26":"#F09A84"):C.ink,"right","rtl");}});});});}
+    // follow-up pill
+    y+=80;
+    if(v.next){var ft=(EN?"Follow-up  ":"ميعاد المتابعة  ")+fmtD(v.next);x.font="600 32px "+FD;var fw=x.measureText(ft).width+70;
+      if(draw){x.fillStyle=C.gold;rr(EN?P:W-P-fw,y-44,fw,66,33);x.fill();txt(ft,EN?P+fw/2:W-P-fw/2,y,"600 32px "+FD,light?"#FFFDF8":"#121516","center",EN?"ltr":"rtl");}
+      y+=60;}
+    // signature + footer
+    y+=40;
+    if(draw){x.strokeStyle=C.line;x.lineWidth=1.5;x.beginPath();x.moveTo(P,y);x.lineTo(P+340,y);x.stroke();txt(EN?"Signature":"توقيع الطبيب",P+170,y+38,"400 24px "+FB,C.mut,"center",EN?"ltr":"rtl");}
+    y+=90;if(draw)orn(y);y+=56;
+    var cls=CL.filter(function(c){return c.active;}).map(function(c){return c.name;}).slice(0,5).join(" · ");
+    if(draw){txt((SET.wa||"01145914430")+"   ·   @dr.karimelshourbagy   ·   karimelshourbagy1.github.io",W/2,y,"400 25px "+FB,C.mut,"center","ltr");
+      if(cls)txt(cls,W/2,y+42,"400 24px "+FB,C.mut,"center","rtl");}
+    y+=(cls?42:0)+90;
+    return y;}
+  cv.width=W;cv.height=10;x=cv.getContext("2d");
+  var H=Math.max(1900,layout(false));cv.height=H;x=cv.getContext("2d");layout(true);
   return cv;}
 function fmtD(d){if(!d)return "";var p=String(d).split("-");return p.length===3?(+p[2])+"/"+(+p[1])+"/"+p[0]:d;}
 function rxImage(light){var p=SH.p,v=SH.v,b=$("sh-rximg");b.disabled=true;b.textContent="بيجهز…";
@@ -2741,6 +2853,8 @@ function rxMsg(onlyEdu){var p=SH.p,v=SH.v,ed=eduSel().map(function(e){return edu
   var t=(SET.tpl&&SET.tpl.rxsend)||TPL_DEF.rxsend[1];
   if(!SET.greview){var L=t.split("\n"),o=[];L.forEach(function(l,i){if(l.indexOf("{اللينك}")>-1)return;if(/جوجل|google/i.test(l)&&(L[i+1]||"").indexOf("{اللينك}")>-1)return;o.push(l);});t=o.join("\n");}
   t=gtx(t,p.sex);
+  var cks=careKeys(v.items,v.ses),care=cks.length?"*تعليماتك بعد جلسة النهارده:*\n\n"+cks.map(function(k){return "*"+CARE[k][0]+"*\n"+CARE[k][1];}).join("\n\n"):"";
+  ed=[ed,care].filter(Boolean).join("\n\n");
   var vars={"الاسم":first,"المتابعة":v.next?"📅 ميعاد المتابعة: "+fmtD(v.next):"","التوعية":ed,"اللينك":SET.greview||""};
   Object.keys(vars).forEach(function(k){t=t.split("{"+k+"}").join(vars[k]);});
   return t.replace(/[ \t]+$/gm,"").replace(/\n{3,}/g,"\n\n").trim();}
@@ -2757,7 +2871,7 @@ function shareRx(blobP,chat){var msg=rxMsg();try{navigator.clipboard.writeText(w
    .then(function(){toast("✓ اتبعتت — لو الكلام ماظهرش مع الصورة، الصقه (اتنسخ)",false,6000);},
      function(err){if(err&&err.name==="AbortError")return;if(chat){toast("المشاركة مش متاحة هنا — هفتحلك الشات وانت ابعت الصورة من «روشتة كصورة»",true,7000);rxImage(false);}});}
 $("sh-rxsend").addEventListener("click",function(e){var p=SH.p,a=$("sh-rxsend");
-  if(!(SH.v.plan||"").trim()){e.preventDefault();toast("اكتب الروشتة الأول",true);$("v-plan").focus();return;}
+  if(!(SH.v.plan||"").trim()&&!careKeys(SH.v.items,SH.v.ses).length){e.preventDefault();toast("اكتب الروشتة أو سجّل الجلسة الأول",true);$("v-plan").focus();return;}
   var l=waLink(p.phone,rxMsg());if(!l){e.preventDefault();toast("مفيش رقم موبايل للمريض",true);$("p-phone").focus();return;}
   if(!SET.greview)toast("ملحوظة: لينك تقييم جوجل مش متسجل في الإعدادات — الرسالة هتتبعت من غيره",true,5000);
   else if(patLang(p)==="en"&&(SH.v.plan||"").split("\n").some(function(l){return AR_RE.test(rxLineEn(l));}))toast("المريض ده إنجليزي — فيه سطور في الروشتة لسه بالعربي، راجعها",true,6000);
@@ -3846,6 +3960,63 @@ function moRender(){var box=$("mo-box");if(!box)return;moSeed();var r=moCalc(MO)
   qa("[data-ma]",box).forEach(function(b){b.addEventListener("click",function(){var a=b.getAttribute("data-ma");if(a==="weak"){MO.fo+=2;MO.po-=5;}else if(a==="hot"){MO.fo-=2;MO.po+=10;}else{MO.fo=0;MO.po=0;}moRender();});});
   $("mo-use").addEventListener("click",function(){var r=moCalc(MO),v={dev:"DEKA Motus PRO "+(r.laser==="YAG"?"Nd:YAG":"Alex"),wl:r.wl,flu:r.flu.toFixed(1),pw:String(r.pw),spot:String(MO.spot),hz:r.hz.toFixed(1)};
     Object.keys(v).forEach(function(k){sesSet(k,v[k]);var i=$("ses-"+k);if(i)i.value=v[k];});toast("اتحطت في الجلسة — عدّلها لو محتاج");});}
+/* ===== Laser studio tab ===== */
+var LZ={skin:3,hair:"thick",spot:18,zones:[],pid:null,adj:{}};
+var LZ_SKIN=[[2,"I – II","فاتح","#F6DCC6"],[3,"III","قمحاوي فاتح","#E2B48C"],[4,"IV","قمحاوي غامق","#BE875C"],[5,"V – VI","غامق / أسمر","#7A4B2E"],[6,"Tanned","واخد تان","#C9824E"]];
+var LZ_Z=[["face","وجه كامل","face","◐"],["lip","شنب","face","〰"],["chinf","دقن (ستات)","face","◡"],["beard","ذقن رجالي","beard","▼"],["neck","رقبة","normal","▯"],["arm_u","أندر آرم","dark","◖"],["bikini","بيكيني","dark","◇"],["arms","دراعات","normal","║"],["legs","رجلين","normal","‖"],["back","ضهر","normal","▭"],["chest","صدر","normal","▢"],["abd","بطن","normal","▣"]];
+function lzZ(k){return LZ_Z.filter(function(z){return z[0]===k;})[0];}
+function lzStage(){var n=+$("lz-no").value||1;return n>=5?3:(n>=3?2:1);}
+function lzPat(){return LZ.pid?patById(LZ.pid):null;}
+function lzGroups(){var g={},out=[];LZ.zones.forEach(function(k){var z=lzZ(k);if(!z)return;if(!g[z[2]]){g[z[2]]={area:z[2],zones:[]};out.push(g[z[2]]);}g[z[2]].zones.push(z[1]);});return out;}
+function lzPick(p){LZ.pid=p?p.id:null;$("lz-q").value="";$("lz-res").innerHTML="";$("lz-clear").hidden=!p;LZ.adj={};
+  if(p){var fz={"I":2,"II":2,"III":3,"IV":4,"V":5,"VI":5}[p.fitz||""];if(fz)LZ.skin=fz;var ag=parseInt(String(p.age||"").replace(/[^\d]/g,""),10);$("lz-age").value=ag||"";
+    var last=vsorted(p).filter(function(v){return v.ses&&v.ses.type==="laser";})[0];$("lz-no").value=last&&+last.ses.no?(+last.ses.no+1):1;
+    if(last&&[12,15,18].indexOf(parseFloat(last.ses.spot))>-1)LZ.spot=parseFloat(last.ses.spot);}
+  lzRender();}
+function lzRender(){
+  var p=lzPat();$("lz-pat").innerHTML=p?'👤 <b>'+esc(p.name||"")+'</b>'+(p.fileNo?' · '+esc(p.fileNo):'')+(p.fitz?' · Fitz '+esc(p.fitz):''):'';
+  $("lz-skin").innerHTML=LZ_SKIN.map(function(o){return '<button type="button" class="lz-skin" data-v="'+o[0]+'" aria-pressed="'+(LZ.skin===o[0])+'"><i style="background:'+o[3]+'"></i><b>'+esc(o[1])+'</b><small>'+esc(o[2])+'</small></button>';}).join("");
+  $("lz-zone").innerHTML=LZ_Z.map(function(z){return '<button type="button" class="lz-z" data-v="'+z[0]+'" aria-pressed="'+(LZ.zones.indexOf(z[0])>-1)+'"><b>'+z[3]+'</b>'+esc(z[1])+'</button>';}).join("");
+  $("lz-hair").innerHTML=MO_OPT.hair.map(function(o){return '<button type="button" class="lz-o" data-v="'+o[0]+'" aria-pressed="'+(LZ.hair===o[0])+'">'+esc(o[1])+'<small>'+esc(o[2])+'</small></button>';}).join("");
+  $("lz-spot").innerHTML=MO_OPT.spot.map(function(o){return '<button type="button" class="lz-o" data-v="'+o[0]+'" aria-pressed="'+(LZ.spot===o[0])+'">'+esc(o[1])+'<small>'+esc(o[2])+'</small></button>';}).join("");
+  var age=+$("lz-age").value||0,no=+$("lz-no").value||1,gs=lzGroups(),warn=[];
+  if(age&&age<18)warn.push("المريض تحت 18 سنة: لازم موافقة ولي الأمر قبل الجلسة.");
+  if(LZ.skin===6)warn.push("واخد تان قريب: الخوارزمية بتعامله زي البشرة الغامقة (YAG). اسأله عن آخر تعرض للشمس.");
+  var html=warn.map(function(w){return '<div class="lz-warn">⚠️ '+esc(w)+'</div>';}).join("");
+  if(!gs.length){$("lz-out").innerHTML=html+'<div class="lz-card m">اختار منطقة واحدة على الأقل عشان تظهر الباراميترز.</div>';return;}
+  gs.forEach(function(g,i){var a=LZ.adj[g.area]||{fo:0,po:0},r=moCalc({skin:LZ.skin,area:g.area,hair:LZ.hair,session:lzStage(),spot:LZ.spot,fo:a.fo,po:a.po}),Y=r.laser==="YAG";g.r=r;
+    html+='<div class="lz-scr"><div class="lz-top"><span>MOTUS PRO · الجلسة '+no+(age?' · '+age+' سنة':'')+'</span><b>Ø '+LZ.spot+'.0 mm</b></div>'+
+      '<div class="lz-zl">'+esc(g.zones.join(" · "))+'</div>'+
+      '<div style="text-align:center;margin-top:8px"><div class="lz-badge"><span class="'+(Y?'':'on-a')+'">ALEX 755</span><span class="'+(Y?'on-y':'')+'">YAG 1064</span></div></div>'+
+      '<div class="lz-g"><div class="lz-gauge'+(Y?'':' a')+'"><small>FLUENCE</small><b>'+r.flu.toFixed(1)+'</b><i>J/cm²</i></div><div class="lz-gauge'+(Y?'':' a')+'"><small>PULSE</small><b>'+r.pw+'</b><i>ms</i></div><div class="lz-gauge'+(Y?'':' a')+'"><small>FREQ</small><b>'+r.hz.toFixed(1)+'</b><i>Hz</i></div></div>'+
+      '<div style="font-size:.76rem;color:#94A3B8;text-align:center">تعديل فوري حسب الـ Test Patch</div><div class="lz-adj"><button type="button" class="lz-up" data-a="weak" data-g="'+g.area+'">تفاعل ضعيف ➕</button><button type="button" class="lz-dn" data-a="hot" data-g="'+g.area+'">لسعة شديدة ➖</button><button type="button" class="lz-rs" data-a="reset" data-g="'+g.area+'">إرجاع</button></div>'+
+      '<div class="lz-notes"><b>توجيهات الحالة:</b><ul>'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join("")+'</ul></div></div>';});
+  html+='<div class="lz-act">'+(p?'<button class="btn gold" type="button" id="lz-go">سجّلها في جلسة '+esc((p.name||"").split(" ")[0])+' النهارده</button>':'<button class="btn gold" type="button" id="lz-new">ابدأ حالة جديدة بالإعدادات دي</button>')+
+    '<button class="btn" type="button" id="lz-cp">انسخ الإعدادات</button></div><div class="m">اقتراح للبداية من خوارزميتك، والقرار بعد الـ Test Patch ليك. السن مش بيغيّر الحسبة.</div>';
+  $("lz-out").innerHTML=html;LZ.groups=gs;
+  qa("[data-a]",$("lz-out")).forEach(function(b){b.addEventListener("click",function(){var g=b.getAttribute("data-g"),a=LZ.adj[g]||(LZ.adj[g]={fo:0,po:0}),t=b.getAttribute("data-a");
+    if(t==="weak"){a.fo+=2;a.po-=5;}else if(t==="hot"){a.fo-=2;a.po+=10;}else{a.fo=0;a.po=0;}lzRender();});});
+  if($("lz-cp"))$("lz-cp").addEventListener("click",function(){var t=LZ.groups.map(function(g){return g.zones.join("، ")+": "+g.r.laser+" "+g.r.wl+" · "+g.r.flu.toFixed(1)+" J/cm² · "+g.r.pw+" ms · "+g.r.hz.toFixed(1)+" Hz · Spot "+LZ.spot+" mm";}).join("\n");
+    try{navigator.clipboard.writeText(t).then(function(){toast("اتنسخت ✓");});}catch(e){toast("ماقدرتش أنسخ",true);}});
+  var go=function(pid){var g=LZ.groups[0],r=g.r,extra=LZ.groups.slice(1).map(function(x){return x.zones.join("، ")+": "+x.r.laser+" "+x.r.wl+" · "+x.r.flu.toFixed(1)+" J · "+x.r.pw+" ms · "+x.r.hz.toFixed(1)+" Hz";}).join("\n");
+    openSheet(pid||null);if(!pid&&$("lz-age").value)SH.p.age=$("lz-age").value;
+    var fz={2:"II",3:"III",4:"IV",5:"V"}[LZ.skin];if(fz&&!SH.p.fitz)SH.p.fitz=fz;
+    SH.v.ses=Object.assign({},SH.v.ses||{},{type:"laser",no:String(+$("lz-no").value||1),dev:"DEKA Motus PRO "+(r.laser==="YAG"?"Nd:YAG":"Alex"),wl:r.wl,flu:r.flu.toFixed(1),pw:String(r.pw),spot:String(LZ.spot),hz:r.hz.toFixed(1),zones:(SH.v.ses&&SH.v.ses.zones)||[],
+      note:"المناطق: "+LZ.groups.map(function(x){return x.zones.join("، ");}).join("، ")+(extra?"\n"+extra:"")});
+    touch();fillSheet();toast("الإعدادات اتحطت في سجل الجلسة ✓");};
+  if($("lz-go"))$("lz-go").addEventListener("click",function(){go(LZ.pid);});
+  if($("lz-new"))$("lz-new").addEventListener("click",function(){go(null);});}
+$("lz-skin").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;LZ.skin=+b.getAttribute("data-v");LZ.adj={};lzRender();});
+$("lz-zone").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var k=b.getAttribute("data-v"),i=LZ.zones.indexOf(k);if(i>-1)LZ.zones.splice(i,1);else LZ.zones.push(k);lzRender();});
+$("lz-hair").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;LZ.hair=b.getAttribute("data-v");LZ.adj={};lzRender();});
+$("lz-spot").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;LZ.spot=+b.getAttribute("data-v");LZ.adj={};lzRender();});
+$("lz-age").addEventListener("input",lzRender);$("lz-no").addEventListener("input",function(){LZ.adj={};lzRender();});
+$("lz-clear").addEventListener("click",function(){lzPick(null);});
+$("lz-q").addEventListener("input",function(){var q=norm($("lz-q").value);if(q.length<2){$("lz-res").innerHTML="";return;}
+  var l=PAT.filter(function(p){return norm(p.name).indexOf(q)>-1||norm(p.nameEn).indexOf(q)>-1||norm(p.phone).indexOf(q)>-1||norm(p.fileNo).indexOf(q)>-1;}).slice(0,5);
+  $("lz-res").innerHTML=l.map(function(p){return '<button type="button" data-id="'+esc(p.id)+'"><b>'+esc(p.name||"")+'</b> <span class="m">'+esc([p.fileNo,p.phone,p.fitz?"Fitz "+p.fitz:""].filter(Boolean).join(" · "))+'</span></button>';}).join("")||'<div class="m">مفيش نتيجة</div>';
+  qa("[data-id]",$("lz-res")).forEach(function(b){b.addEventListener("click",function(){lzPick(patById(b.getAttribute("data-id")));});});});
+$("t-laser").addEventListener("click",function(){setTimeout(lzRender,0);});
 function sesSet(k,val){var s=SH.v.ses||(SH.v.ses={});s[k]=val;touch();}
 $("ses-t").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var t=b.getAttribute("data-v"),s=SH.v.ses||{};
   if(s.type===t)return;SH.v.ses=Object.assign({},{type:t,zones:s.zones||[],note:s.note||"",no:s.no||""});

@@ -667,6 +667,18 @@ body{background:transparent}
 .ct-hist th,.ct-hist td{padding:6px 8px;border-bottom:1px solid var(--line2);text-align:center;white-space:nowrap}.ct-hist th{color:var(--muted);font-weight:500}
 .ct-hist .lo{color:var(--red)}.ct-hist td:nth-child(2){white-space:normal;min-width:200px;text-align:start}.ct-f input,.ct-f select{border:1px solid var(--line);background:var(--sunk);border-radius:10px}.ct-big b.sm{font-size:1.45rem}.ct-tw{overflow-x:auto}
 @media(max-width:860px){.ct-groups,.ct-grid{grid-template-columns:1fr}}
+
+/* text direction: each line follows its own language (Arabic right-to-left, English left-to-right) */
+textarea,input:not([type=number]):not([type=tel]):not([type=date]):not([type=time]):not([type=email]):not([type=url]):not(.ltr){unicode-bidi:plaintext;text-align:start}
+.bd,.ag-out,.ai,.edu-pv,.tl-sum,[data-free]{unicode-bidi:plaintext;text-align:start}
+bdi,.bdi{unicode-bidi:isolate}
+
+#lk{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(70% 70% at 50% 40%,rgba(217,182,111,.16),transparent 70%),rgba(6,6,7,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#F3EEE4}
+#lk .lk-c{width:100%;max-width:340px;text-align:center;padding:30px 24px;border-radius:22px;border:1px solid rgba(217,182,111,.35);background:linear-gradient(160deg,rgba(28,26,22,.7),rgba(10,10,11,.6))}
+#lk .lk-logo{width:52px;height:60px;margin:0 auto 8px;background:linear-gradient(135deg,#F7E3AE,#B8924A);-webkit-mask:url(img/logo-mask.png) center/contain no-repeat;mask:url(img/logo-mask.png) center/contain no-repeat}
+#lk h2{color:#F0D79C;margin:0 0 4px}#lk p{margin:0 0 14px;opacity:.7;font-size:.9rem}
+#lk input{text-align:center;letter-spacing:.5em;font-size:1.4rem;background:rgba(0,0,0,.4);color:#F3EEE4;border:1px solid rgba(217,182,111,.4);border-radius:12px;padding:12px}
+#lk .lk-e{color:#FFB4A6;min-height:1.3em;margin-top:8px;font-size:.88rem}
 </style>
 
 <div class="app">
@@ -1168,6 +1180,9 @@ body{background:transparent}
     <div class="grid g2"><div><label class="f" for="st-vip">مريض VIP لو دفع إجمالي أكتر من</label><input id="st-vip" type="number" step="1000" placeholder="10000"></div>
     <div><label class="f" for="st-grev">لينك تقييم جوجل (Google review)</label><input id="st-grev" class="ltr" placeholder="https://g.page/r/…"></div></div>
     <div class="grid g2"><div><label class="f" for="st-exp">نبّهني قبل انتهاء صلاحية الماتريال بـ (يوم)</label><input id="st-exp" type="number" step="15" placeholder="60" style="max-width:180px"></div><div><label class="f" for="st-wam">واتساب على الكمبيوتر</label><select id="st-wam"><option value="">WhatsApp Web — الإيموجي بتظهر صح (الأفضل)</option><option value="app">برنامج واتساب على الكمبيوتر — من غير إيموجي</option></select><div class="m">برنامج واتساب على ويندوز بيحوّل الإيموجي اللي جاية من لينك لعلامة استفهام.</div></div></div>
+    <div class="grid g2"><div><label class="f" for="st-rtb">ذكّرني بإعادة البوتوكس بعد (شهر)</label><input id="st-rtb" type="number" min="1" max="24" placeholder="4" style="max-width:180px"></div><div><label class="f" for="st-rtf">ذكّرني بإعادة الفيلر بعد (شهر)</label><input id="st-rtf" type="number" min="1" max="36" placeholder="9" style="max-width:180px"></div></div>
+    <div class="grid g2"><div><label class="f" for="st-pin">رقم سري لقفل الشاشة (4 أرقام أو أكتر)</label><div class="row"><input id="st-pin" type="password" inputmode="numeric" autocomplete="new-password" placeholder="مثلاً 2580" style="max-width:180px"><button class="btn s" type="button" id="st-pin-save">احفظ</button><button class="btn s ghost" type="button" id="st-pin-del">شيل القفل</button></div><div class="m" id="st-pin-st"></div></div>
+      <div><label class="f" for="st-lockm">اقفل لوحده لو سبته (دقيقة)</label><input id="st-lockm" type="number" min="0" max="120" placeholder="0 = من غير قفل تلقائي" style="max-width:180px"></div></div>
     <div class="row"><button class="btn s" type="button" id="ex-pat">نزّل كل المرضى Excel (CSV)</button></div>
   </div>
   <div class="sec-h"><h2>رسائل التوعية حسب التشخيص</h2></div>
@@ -1469,7 +1484,8 @@ function isMob(){return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAg
 /* desktop: WhatsApp Web keeps emojis; the Windows app turns them into "?" — so "app" mode strips them */
 function waWeb(){return !isMob()&&SET.wam!=="app";}
 function waText(t){t=String(t||"");return (!isMob()&&SET.wam==="app")?t.replace(/(?:[\u{1F000}-\u{1FAFF}]|[\u2600-\u27BF]|\u2B50)\uFE0F?/gu,"").replace(/[ \t]+\n/g,"\n").replace(/^[ \t]+/gm,""):t;}
-function waUrl(d,text){text=text?waText(text):"";
+function waBidi(t){return String(t).split("\n").map(function(l){return /[\u0600-\u06FF]/.test(l)&&!/^\u200F/.test(l)?"\u200F"+l:l;}).join("\n");}
+function waUrl(d,text){text=text?waBidi(waText(text)):"";
   if(waWeb())return "https://web.whatsapp.com/send?"+(d?"phone="+d+(text?"&":""):"")+(text?"text="+encodeURIComponent(text):"");
   return "https://wa.me/"+(d||"")+(text?"?text="+encodeURIComponent(text):"");}
 function waLink(phone,text){
@@ -2767,7 +2783,12 @@ function checkins(){var t0=today(),out=[];
     var proc=(v.items||[]).filter(function(it){var s=svc(it.sid);return (s&&s.k!=="k")||it.pk||it.course;});
     if(proc.length&&age>=1&&age<=3&&!ck.c)out.push({p:p,v:v,k:"c",lbl:"اطمن عليه بعد الجلسة",age:age,tx:tpl("checkin",{"الاسم":p.name,"الخدمة":proc.map(function(x){return x.name;}).join(" + ")})});
     var bx=(v.items||[]).some(function(it){var s=svc(it.sid);return s&&s.c==="بوتوكس";});
-    if(bx&&age>=12&&age<=18&&!ck.b)out.push({p:p,v:v,k:"b",lbl:"مراجعة البوتوكس (أسبوعين)",age:age,tx:tpl("botox2w",{"الاسم":p.name})});});
+    if(bx&&age>=12&&age<=18&&!ck.b)out.push({p:p,v:v,k:"b",lbl:"مراجعة البوتوكس (أسبوعين)",age:age,tx:tpl("botox2w",{"الاسم":p.name})});
+    [["rb",/بوتوكس|botox|dysport|ديسبورت|xeomin/i,(+SET.rtB||4),"البوتوكس"],["rf",/فيلر|filler|juvederm|restylane|saypha|بروفايلو|profhilo|سكين ?بوستر/i,(+SET.rtF||9),"الفيلر"]].forEach(function(R){
+      var has=(v.items||[]).some(function(it){var s=svc(it.sid);return R[1].test(it.name||"")||(s&&R[1].test((s.c||"")+" "+(s.n||"")));});if(!has||ck[R[0]])return;
+      var due=R[2]*30,later=(p.visits||[]).some(function(w){return w.d>v.d&&(w.items||[]).some(function(it){return R[1].test(it.name||"");});});
+      var hasAp=APP.some(function(a){return (a.pid===p.id||(a.phone&&a.phone===p.phone))&&a.d>=t0&&(isUpSt(a.st)||a.st==="req");});
+      if(!later&&!hasAp&&age>=due-7&&age<=due+60)out.push({p:p,v:v,k:R[0],lbl:"ميعاد إعادة "+R[3]+" ("+R[2]+" شهور)",age:age,tx:"أهلاً "+p.name+" 🌿 عدّى "+R[2]+" شهور تقريباً على جلسة "+R[3]+" مع د. كريم الشوربجي، وده وقت مناسب للإعادة عشان النتيجة تفضل ثابتة. تحب نحجزلك ميعاد إمتى؟"});});});
     patCourses(p).forEach(function(c){if(c.left<=0)return;var lastD=c.d;(p.visits||[]).forEach(function(v){(v.items||[]).forEach(function(it){if(it.course===c.id&&v.d>lastD)lastD=v.d;});});
       var age=Math.round((dOf(t0)-dOf(lastD))/864e5),hasAp=APP.some(function(a){return (a.pid===p.id||(a.phone&&a.phone===p.phone))&&a.d>=t0&&(isUpSt(a.st)||a.st==="req");});
       var lv=lastVisit(p),done=lv&&lv.ck&&lv.ck["r"+c.id];
@@ -3403,7 +3424,7 @@ function photoCompare(){var ph=(SH.p.photos||[]).filter(function(x){return x.tag
     '<div class="grid g2"><div><label class="f" for="pc-a">قبل</label><select id="pc-a">'+opts(bf)+'</select></div><div><label class="f" for="pc-b">بعد</label><select id="pc-b">'+opts(af)+'</select></div></div>'+
     '<div class="cmp" id="pc-box"><img id="pc-ia" alt="قبل"><div class="cmp-top" id="pc-top"><img id="pc-ib" alt="بعد"></div><div class="cmp-h" id="pc-h"></div><span class="cmp-l">قبل</span><span class="cmp-r">بعد</span></div>'+
     '<input type="range" id="pc-r" min="0" max="100" value="50" aria-label="مكان خط المقارنة">'+
-    '</div><div class="df"><button class="btn p" type="button" id="pc-dl">نزّلها جنب بعض</button><span class="m" id="pc-days"></span></div>',function(){
+    '</div><div class="df"><button class="btn p" type="button" id="pc-dl">نزّلها جنب بعض</button><button class="btn gold" type="button" id="pc-pub">نسخة للنشر بلوجو</button><label class="switch" style="margin:0"><input type="checkbox" id="pc-ok"><span>المريض موافق على النشر</span></label><span class="m" id="pc-days"></span></div>',function(){
     function src(id){return KRT.blob(id);}
     function upd(){var a=$("pc-a").value,b=$("pc-b").value;$("pc-ia").setAttribute("data-bid",a);$("pc-ib").setAttribute("data-bid",b);$("pc-ia").src=src(a);$("pc-ib").src=src(b);var A=ph.filter(function(x){return x.id===a;})[0],B=ph.filter(function(x){return x.id===b;})[0];
       var dd=A&&B?Math.round((dOf(B.d)-dOf(A.d))/864e5):0;$("pc-days").textContent=dd?("الفرق: "+dd+" يوم"):"";slide();}
@@ -3416,6 +3437,20 @@ function photoCompare(){var ph=(SH.p.photos||[]).filter(function(x){return x.tag
       x.fillStyle="#D4B373";x.font='600 40px "Readex Pro","IBM Plex Sans Arabic",sans-serif';x.direction="rtl";x.textAlign="center";
       x.fillText("قبل · "+fmtD(A.d),wa/2,h+66);x.fillText("بعد · "+fmtD(B.d),wa+30+wb/2,h+66);
       cv.toBlob(function(bl){if(dlNS)saveFile("before-after-"+(SH.p.fileNo||"")+".jpg",bl);else toast("التنزيل مش متاح هنا",true);},"image/jpeg",0.9);});
+    $("pc-pub").addEventListener("click",async function(){if(!$("pc-ok").checked){toast("علّم إن المريض موافق على النشر الأول",true);return;}
+      var A=ph.filter(function(x){return x.id===$("pc-a").value;})[0],B=ph.filter(function(x){return x.id===$("pc-b").value;})[0];
+      var ia=await loadImg(src(A.id)),ib=await loadImg(src(B.id)),lg=await loadImg("img/logo-mask.png");if(!ia||!ib){toast("الصور ماتحملتش",true);return;}
+      var S=1080,cv=document.createElement("canvas");cv.width=S*2+60;cv.height=S+260;var x=cv.getContext("2d");
+      var g=x.createLinearGradient(0,0,cv.width,cv.height);g.addColorStop(0,"#0C0C0D");g.addColorStop(1,"#231D14");x.fillStyle=g;x.fillRect(0,0,cv.width,cv.height);
+      function cover(im,X){var r=Math.max(S/im.width,S/im.height),w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(X,20,S,S);x.clip();x.drawImage(im,X+(S-w)/2,20+(S-h)/2,w,h);x.restore();x.strokeStyle="rgba(217,182,111,.6)";x.lineWidth=3;x.strokeRect(X,20,S,S);}
+      cover(ia,20);cover(ib,S+40);
+      x.fillStyle="#D9B66F";x.font='600 56px "Readex Pro","IBM Plex Sans Arabic",sans-serif';x.textAlign="center";x.direction="rtl";
+      x.fillText("قبل",20+S/2,S+90);x.fillText("بعد",S+40+S/2,S+90);
+      if(lg){var lc=document.createElement("canvas");lc.width=lg.width;lc.height=lg.height;var lx=lc.getContext("2d");lx.drawImage(lg,0,0);lx.globalCompositeOperation="source-in";lx.fillStyle="#D9B66F";lx.fillRect(0,0,lc.width,lc.height);
+        x.drawImage(lc,cv.width/2-34,S+112,68,80);}
+      x.font='600 40px "Readex Pro","IBM Plex Sans Arabic",sans-serif';x.fillStyle="#F3EEE4";x.fillText("Dr. Karim Elshourbagy",cv.width/2,S+238);
+      x.globalAlpha=.22;x.font='600 70px "Readex Pro",sans-serif';x.fillStyle="#fff";x.translate(cv.width/2,S/2+20);x.rotate(-Math.PI/9);x.fillText("Dr. Karim Elshourbagy",0,0);x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;
+      cv.toBlob(function(bl){if(dlNS)saveFile("before-after-post.jpg",bl);else toast("التنزيل مش متاح هنا",true);},"image/jpeg",0.92);toast("اتعملت نسخة للنشر من غير اسم المريض ولا تاريخ ✓");});
   });}
 
 /* ================= SCHEDULING EXTRAS ================= */
@@ -4149,6 +4184,11 @@ var CT_DEF={
    lines.push("يمين: "+R.toFixed(1)+" mL · شمال: "+Lf.toFixed(1)+" mL");
    if(R&&Lf){var d=Math.abs(R-Lf)/Math.max(R,Lf)*100;lines.push("الفرق: "+d.toFixed(0)+"% ("+Math.abs(R-Lf).toFixed(1)+" mL)");if(d>20)fl.push("فرق أكتر من 20%");}
    return {big:(R+Lf).toFixed(1)+" mL",sub:"الحجم الكلي",flags:fl,ok:!fl.length,lines:lines,src:"معادلة Lambert: الطول × العرض × السُمك × 0.71. فرق أكتر من 20% معيار شائع في متابعة دوالي المراهقين."};}},
+ duplex:{g:"andro",t:"دوبلكس الخصية",f:[["s1","الناحية الشمال",""],["lr","قطر الوريد (راحة)","mm"],["lv","قطر الوريد (Valsalva)","mm"],["lf","مدة الارتجاع","ثانية"],["lri","RI","index"],["lvol","حجم الخصية","mL"],["s2","الناحية اليمين",""],["rr","قطر الوريد (راحة)","mm"],["rv","قطر الوريد (Valsalva)","mm"],["rf","مدة الارتجاع","ثانية"],["rri","RI","index"],["rvol","حجم الخصية","mL"]],
+  c:function(v){var fl=[],lines=[],side=function(n,r,va,f,ri,vol){var mx=Math.max(+r||0,+va||0),t=[];if(mx)t.push("أقصى قطر "+mx+" mm");if(f!=="")t.push("ارتجاع "+f+" ث");if(ri!=="")t.push("RI "+ri);if(vol!=="")t.push(vol+" mL");if(t.length)lines.push(n+": "+t.join(" · "));if(mx>=3)fl.push(n+": قطر ≥ 3 mm");};
+   side("شمال",v.lr,v.lv,v.lf,v.lri,v.lvol);side("يمين",v.rr,v.rv,v.rf,v.rri,v.rvol);
+   if(v.lvol!==""&&v.rvol!==""&&+v.lvol&&+v.rvol){var d=Math.abs(v.lvol-v.rvol)/Math.max(+v.lvol,+v.rvol)*100;lines.push("فرق الحجم: "+d.toFixed(0)+"%");if(d>20)fl.push("فرق الحجم > 20%");}
+   return {big:fl.length?"محتاج مراجعة":"مسجّل",sub:"",flags:fl,ok:!fl.length,lines:lines,src:"قطر الوريد ≥ 3 mm حد شائع في تقارير الدوالي. مدة الارتجاع و RI بتتسجل وتتقارن بالقرايات اللي جاية ومع تحليل السائل المنوي."};}},
  iief:{g:"andro",t:"IIEF-5",f:CT_Q5.map(function(q){return [q[0].toLowerCase(),q[0],q[1],"sel5"];}),
   c:function(v){var sc=0,n=0;["q1","q2","q3","q4","q5"].forEach(function(k){if(v[k]){sc+=+v[k];n++;}});
    var b=sc>=22?"No ED":sc>=17?"Mild ED":sc>=12?"Mild to moderate ED":sc>=8?"Moderate ED":"Severe ED";
@@ -4286,15 +4326,30 @@ $("ag-book").addEventListener("click",function(){var t=$("ag-msg").value;editBoo
   try{new MutationObserver(soon).observe(document.body,{childList:true,subtree:true});}catch(e){}
   soon();
 })();
+
+/* ===== screen lock (PIN) ===== */
+var LK={t:0,on:false};
+async function lkHash(pin){var b=new TextEncoder().encode("krt-lock:"+pin),h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(function(x){return x.toString(16).padStart(2,"0");}).join("");}
+function lkShow(){if(!SET.pinH||LK.on)return;LK.on=true;try{sessionStorage.setItem("krt-lk","1");}catch(e){}var d=document.createElement("div");d.id="lk";d.innerHTML='<div class="lk-c"><div class="lk-logo" aria-hidden="true"></div><h2>الشاشة مقفولة</h2><p>اكتب الرقم السري عشان تكمّل</p><input id="lk-in" type="password" inputmode="numeric" autocomplete="off"><div class="lk-e" id="lk-e"></div></div>';document.body.appendChild(d);
+  var i=$("lk-in");setTimeout(function(){i.focus();},50);i.addEventListener("input",async function(){if(i.value.length<4)return;if(await lkHash(i.value)===SET.pinH){d.remove();LK.on=false;try{sessionStorage.removeItem("krt-lk");}catch(e){}lkPoke();}else if(i.value.length>=8){$("lk-e").textContent="الرقم غلط";i.value="";}});
+  i.addEventListener("keydown",async function(e){if(e.key==="Enter"&&await lkHash(i.value)!==SET.pinH){$("lk-e").textContent="الرقم غلط";i.value="";}});}
+function lkPoke(){clearTimeout(LK.t);if(SET.pinH&&+SET.lockMin>0&&!LK.on)LK.t=setTimeout(lkShow,(+SET.lockMin)*60000);}
+function lkArm(){lkPoke();var b=$("lk-btn");if(b)b.hidden=!SET.pinH;}
+["click","keydown","touchstart","scroll"].forEach(function(ev){document.addEventListener(ev,function(){if(!LK.on)lkPoke();},{passive:true,capture:true});});
+(function(){var side=document.querySelector(".side .lx-me");if(side){side.insertAdjacentHTML("beforeend",'<button class="btn s ghost" type="button" id="lk-btn" title="اقفل الشاشة" aria-label="اقفل الشاشة" style="margin-inline-start:auto;padding:4px 8px" hidden>🔒</button>');$("lk-btn").addEventListener("click",lkShow);}})();
+$("st-pin-save").addEventListener("click",async function(){var v=$("st-pin").value.trim();if(!/^\d{4,8}$/.test(v)){toast("الرقم السري من 4 لـ 8 أرقام",true);return;}SET=Object.assign({},SET,{pinH:await lkHash(v)});$("st-pin").value="";saveSettings();renderExtraSettings();lkArm();toast("القفل اتفعّل 🔒 — زرار القفل جنب صورتك");});
+$("st-pin-del").addEventListener("click",function(){if(!SET.pinH)return;if(!confirm("تشيل الرقم السري؟"))return;SET=Object.assign({},SET);delete SET.pinH;saveSettings();renderExtraSettings();lkArm();});
+setTimeout(function(){lkArm();try{if(sessionStorage.getItem("krt-lk"))lkShow();}catch(e){}},1500);
 /* ================= boot ================= */
 function renderAllPrices(){renderServices();renderMaterials();renderPacks();renderGuide();renderRxList();if(SH&&!$("v-sheet").hidden){renderPicker();renderBill();}}
 function refreshLists(){renderHome();renderBook();renderPatients();renderAppts();renderStock();renderMoney();}
-function renderExtraSettings(){$("st-vip").value=SET.vip||"";$("st-grev").value=SET.greview||"";$("st-exp").value=SET.expDays||"";$("st-wam").value=SET.wam||"";renderEduSet();renderLog();}
+function renderExtraSettings(){$("st-vip").value=SET.vip||"";$("st-grev").value=SET.greview||"";$("st-exp").value=SET.expDays||"";$("st-rtb").value=SET.rtB||"";$("st-rtf").value=SET.rtF||"";$("st-lockm").value=SET.lockMin||"";$("st-pin-st").textContent=SET.pinH?"القفل شغال 🔒":"مفيش رقم سري لسه";$("st-wam").value=SET.wam||"";renderEduSet();renderLog();}
 function renderEduSet(){var s=$("st-edu"),cur=s.value||EDU[0][0];s.innerHTML=EDU.map(function(e){return '<option value="'+e[0]+'">'+esc(e[1])+((SET.edu&&SET.edu[e[0]])?" ✎":"")+'</option>';}).join("");s.value=cur;$("st-edu-t").value=(SET.edu&&SET.edu[cur])||eduById(cur)[4];}
 $("st-edu").addEventListener("change",renderEduSet);
 $("st-edu-save").addEventListener("click",function(){var id=$("st-edu").value,t=$("st-edu-t").value.trim();SET=Object.assign({},SET);SET.edu=Object.assign({},SET.edu||{});if(!t||t===eduById(id)[4])delete SET.edu[id];else SET.edu[id]=t;saveSettings();renderEduSet();});
 $("st-edu-rs").addEventListener("click",function(){var id=$("st-edu").value;SET=Object.assign({},SET);SET.edu=Object.assign({},SET.edu||{});delete SET.edu[id];saveSettings();renderEduSet();});
 $("st-wam").addEventListener("change",function(){SET=Object.assign({},SET,{wam:$("st-wam").value});saveSettings();if(SH)updateWa();});
+["st-rtb","st-rtf","st-lockm"].forEach(function(id){$(id).addEventListener("change",function(){SET=Object.assign({},SET,{rtB:+$("st-rtb").value||0,rtF:+$("st-rtf").value||0,lockMin:+$("st-lockm").value||0});saveSettings();refreshLists();lkArm();});});
 ["st-vip","st-grev","st-exp"].forEach(function(id){$(id).addEventListener("change",function(){SET=Object.assign({},SET,{vip:+$("st-vip").value||0,greview:$("st-grev").value.trim(),expDays:+$("st-exp").value||0});saveSettings();refreshLists();});});
 $("ex-pat").addEventListener("click",exportPatients);
 $("t-set").addEventListener("click",renderLog);
